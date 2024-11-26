@@ -11,11 +11,10 @@ class Store extends Model
 
     protected $fillable = ['site_id', 'name', 'address'];
 
-    /*
     public function site()
     {
         return $this->belongsTo(Site::class);
-    }*/
+    }
 
     /*
     public function translations()
