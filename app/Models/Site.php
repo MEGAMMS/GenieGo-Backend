@@ -28,10 +28,10 @@ class Site extends Model
         return $this->translations()->where('language', $lang)->first();
     }
 
-    /*
+    
     public function customerSite()
     {
         return $this->hasMany(CustomerSite::class);
-    }*/
+    }
     
 }
