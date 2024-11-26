@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('stores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Foreign key to 'stores' table
-            $table->decimal('price', 10, 2); // Product price
+            //$table->foreignID('site_id')->constrained('sites')->onDelete('cascade'); // Foreign key to 'sites' table
+            $table->string('name'); // store's name
+            $table->text('address'); // store's address within the site
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('stores');
     }
 };

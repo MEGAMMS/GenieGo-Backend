@@ -11,11 +11,11 @@ class Owner extends Model
 
     protected $fillable = ['user_id', 'store_id'];
 
-    /*
-    public function stores()
+    
+    public function store()
     {
-        return $this->hasMany(Store::class);
-    }*/
+        return $this->belongTo(Store::class);
+    }
 
     public function user()
     {

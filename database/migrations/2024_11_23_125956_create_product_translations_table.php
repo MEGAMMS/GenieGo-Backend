@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_translations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade'); // Foreign key to 'products' table
             $table->string('language'); // Language code, e.g., 'en', 'ar'
             $table->string('name'); // Translated name
             $table->text('description')->nullable(); // Translated description
