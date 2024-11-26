@@ -32,11 +32,11 @@ class Store extends Model
         return $this->hasOne(Owner::class);
     }
 
-    /*
+    
     public function orders()
     {
-        return $this->hasMany(Orders::class);
-    }*/
+        return $this->hasMany(Order::class);
+    }
 
     /*
     public function tags()
@@ -46,6 +46,6 @@ class Store extends Model
  
     public function products()
     {
-        return $this->hasMany(products::class);
+        return $this->hasMany(product::class);
     }
 }
