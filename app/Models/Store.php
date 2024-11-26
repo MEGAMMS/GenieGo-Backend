@@ -16,17 +16,16 @@ class Store extends Model
         return $this->belongsTo(Site::class);
     }
 
-    /*
+    
     public function translations()
     {
         return $this->hasMany(StoreTranslation::class);
-    }*/
+    }
 
-    /*
     public function translation($lang = 'en')
     {
         return $this->translations()->where('language', $lang)->first();
-    }*/
+    }
 
     public function owner()
     {

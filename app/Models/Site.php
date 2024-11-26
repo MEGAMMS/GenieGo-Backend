@@ -17,18 +17,16 @@ class Site extends Model
     {
         return $this->hasMany(Store::class);
     }
-
-     /*
+    
     public function translations()
     {
         return $this->hasMany(SiteTranslation::class);
-    }*/
+    }
 
-    /*
     public function translation($lang = 'en')
     {
         return $this->translations()->where('language', $lang)->first();
-    }*/
+    }
 
     /*
     public function customerSite()
