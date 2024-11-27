@@ -43,9 +43,9 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $user = new User();
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
         $user->save();
 
         return $this->success('User created successfully', statusCode:201);
