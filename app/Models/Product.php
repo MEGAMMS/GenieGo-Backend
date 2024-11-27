@@ -25,4 +25,9 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function tags()
+    {
+        return $this->hasMany(Tags::class);
+    }
 }

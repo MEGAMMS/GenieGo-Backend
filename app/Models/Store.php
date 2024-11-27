@@ -38,11 +38,11 @@ class Store extends Model
         return $this->hasMany(Order::class);
     }
 
-    /*
+    
     public function tags()
     {
-        return $this->hasMany(StoreTags::class);
-    }*/
+        return $this->hasMany(Tags::class);
+    }
  
     public function products()
     {
