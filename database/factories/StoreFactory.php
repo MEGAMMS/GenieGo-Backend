@@ -4,6 +4,10 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+use App\Models\Site;
+use App\Models\Store;
+use App\Models\StoreTranslation;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Store>
  */
@@ -17,7 +21,7 @@ class StoreFactory extends Factory
     public function definition(): array
     {
         return [
-            'site_id'=>Site::factory();
+            'site_id'=>Site::factory()
         ];
     }
 

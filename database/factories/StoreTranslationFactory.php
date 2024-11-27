@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,7 @@ class StoreTranslationFactory extends Factory
     public function definition(): array
     {
         return [
-            'store_id' => Product::factory(), // Use Store factory to generate associated product
+            'store_id' => Store::factory(), // Use Store factory to generate associated product
             'language' => 'en', // Default language; overridden during specific creation
             'name' => fake()->words(3, true), // Random store name
         ];
