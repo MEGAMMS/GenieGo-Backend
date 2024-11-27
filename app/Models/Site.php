@@ -13,9 +13,9 @@ class Site extends Model
         'address',
     ];
 
-    public function stores()
+    public function store()
     {
-        return $this->hasMany(Store::class);
+        return $this->hasOne(Store::class);
     }
     
     public function translations()
