@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('customer_sites', function (Blueprint $table) {
             $table->id();
             $table->foreignID('site_id')->constrained('sites')->onDelete('cascade'); // Foreign key to 'sites' table
-            //$table->foreignID('customer_id')->constrained('customers')->onDelete('cascade'); // Foreign key to 'customers' table
+            $table->foreignID('customer_id')->constrained('customers')->onDelete('cascade'); // Foreign key to 'customers' table
             $table->timestamps();
         });
     }

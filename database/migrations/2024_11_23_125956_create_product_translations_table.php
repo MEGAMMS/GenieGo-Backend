@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade'); // Foreign key to 'products' table
             $table->string('language'); // Language code, e.g., 'en', 'ar'
             $table->string('name'); // Translated name
-            $table->text('description')->nullable(); // Translated description
+            $table->longText('description')->nullable(); // Translated description
             $table->timestamps();
 
             // Unique constraint for product_id and language
