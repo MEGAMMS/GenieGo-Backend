@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignID('site_id')->constrained('sites')->onDelete('cascade'); // Foreign key to 'sites' table
             $table->string('name'); // store's name
-            $table->text('address'); // store's address within the site
             $table->timestamps();
         });
     }
