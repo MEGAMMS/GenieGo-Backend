@@ -29,9 +29,9 @@ class Site extends Model
     }
 
     
-    public function customerSite()
+    public function customers()
     {
-        return $this->hasMany(CustomerSite::class);
+        return $this->hasMany(Customer::class);
     }
     
 }

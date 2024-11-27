@@ -16,9 +16,9 @@ class Customer extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function site()
+    public function sites()
     {
-        return $this->hasMany(CustomerSite::class);
+        return $this->hasMany(Site::class);
     }
 
     
