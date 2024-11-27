@@ -21,4 +21,13 @@ class Product extends Model
         return $this->translations()->where('language', $lang)->first();
     }
 
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    public function tags()
+    {
+        return $this->hasMany(Tags::class);
+    }
 }

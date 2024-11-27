@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_translations', function (Blueprint $table) {
+        Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade'); // Foreign key to 'products' table
-            $table->string('language'); // Language code, e.g., 'en', 'ar'
-            $table->string('name'); // Translated name
-            $table->longText('description')->nullable(); // Translated description
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade'); // Foreign key to 'orders' table
+            $table->unsignedInteger('quantity')->default(0); // item quantity
+            $table->decimal('price', 10, 2); // Product price * quantity per unit
             $table->timestamps();
-
-            // Unique constraint for product_id and language
-            $table->unique(['product_id', 'language'], 'product_language_unique');
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_translations');
+        Schema::dropIfExists('order_items');
     }
 };

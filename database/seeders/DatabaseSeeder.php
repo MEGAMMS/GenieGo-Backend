@@ -5,6 +5,9 @@ namespace Database\Seeders;
 use App\Models\Product;
 use App\Models\ProductTranslation;
 use App\Models\User;
+use App\Models\Role;
+use App\Models\Owner;
+use App\Models\Customer;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
 
         User::factory()->create([
             'username' => 'test',
