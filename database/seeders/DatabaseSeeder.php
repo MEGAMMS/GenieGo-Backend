@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         $products = Product::factory(10)->create();
 
-
+        
         
         
     }
