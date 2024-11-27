@@ -17,19 +17,26 @@ class AuthController extends Controller
 
     public function login(LoginUserRequest $request)
     {
+        $request->validated();
 
-        $request->validated($request->all());
+        // Determine the login field: email, username, or phone
+        $loginField = $request->filled('email') ? 'email' : ($request->filled('username') ? 'username' : 'phone');
 
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        // Attempt to authenticate using the appropriate field and password
+        if (!Auth::attempt([$loginField => $request->$loginField, 'password' => $request->password])) {
             return $this->error('Invalid credentials', 401);
         }
 
-        $user = User::firstWhere('email', $request->email);
-        $token = $user->createToken("API Token for " . $user->email, ['*'], now()->addMonth());
+        // Retrieve the authenticated user
+        $user = User::firstWhere($loginField, $request->$loginField);
+
+        // Generate an API token for the authenticated user
+        $token = $user->createToken("API Token for " . $user->$loginField, ['*'], now()->addMonth());
+
         return $this->ok(
             'Authenticated',
             [
-                'token' => $token->plainTextToken
+                'token' => $token->plainTextToken,
             ]
         );
     }
@@ -43,11 +50,14 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $user = new User();
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->password = Hash::make($request->password);
         $user->save();
 
-        return $this->success('User created successfully', statusCode:201);
+        return $this->success('User created successfully', statusCode: 201);
     }
 }
