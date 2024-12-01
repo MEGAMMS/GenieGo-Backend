@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Customer;
+use App\Models\Product;
 use App\Models\Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -25,4 +26,27 @@ class OrderFactory extends Factory
             'status'=>fake()->randomElement(['delivered','canceled','pending']),
         ];
     }
+
+    public function withProducts($products)
+    {
+        return $this->afterCreating(function ($order) use ($products) {
+            $totalAmount = 0;
+
+            foreach ($products as $product) {
+                $quantity = rand(1, 10); // Random quantity for each product
+                $totalAmount += $product->price * $quantity;
+
+                // Attach the product to the order with pivot data
+                $order->products()->attach($product->id, [
+                    'quantity' => $quantity,
+                ]);
+            }
+
+            // Update the total amount for the order
+            $order->update(['total_price' => $totalAmount]);
+        });
+    }
+
 }
+    
+

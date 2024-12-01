@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Owner;
 use App\Models\Customer;
+use App\Models\Order;
 use App\Models\Store;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,17 +22,25 @@ class DatabaseSeeder extends Seeder
     {
 
 
-        User::factory()->create([
+        $user=User::factory()->create([
             'username' => 'test',
             'email' => 'test@example.com',
             'phone' => '0987654321',
             'password' => 'password'
         ]);
 
-        $users = User::factory(10)->create();
+        //$users = User::factory(10)->create();
 
-        Customer::factory(10)->recycle($users)->create();
-        $products = Product::factory(10)->create();
+        //Customer::factory(10)->recycle($users)->create();
+        $customer=Customer::factory()->recycle($user)->create();
         $tore=Store::factory()->create();
+        $products = Product::factory(10)->recycle($tore)->create();
+
+        $owner=Owner::factory()->recycle($tore)->recycle($user)->create();
+
+        $order=Order::factory()->recycle($customer)->withProducts($products)->create();
+
+
+        
     }
 }
