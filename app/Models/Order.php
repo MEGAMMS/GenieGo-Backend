@@ -10,8 +10,6 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable=[
-        'customer_id',
-        'store_id',
         'total_price',
         'status',
     ];
@@ -26,8 +24,8 @@ class Order extends Model
         return $this->belongsTo(Customer::class);
     }
     
-    public function items()
+    public function products()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->hasMany(Product::class);
     }
 }

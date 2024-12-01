@@ -9,9 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        // 'store_id',
-     'price'];
+    protected $fillable = ['price'];
 
     public function translations()
     {
@@ -23,8 +21,13 @@ class Product extends Model
         return $this->translations()->where('language', $lang)->first();
     }
 
-    // public function tags()
-    // {
-    //     return $this->hasMany(Tags::class);
-    // }
+    public function tags()
+    {
+         return $this->hasMany(Tag::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
