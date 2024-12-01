@@ -41,7 +41,7 @@ class Store extends Model
     
     public function tags()
     {
-        return $this->hasMany(Tags::class);
+        return $this->hasMany(Tag::class);
     }
  
     public function products()

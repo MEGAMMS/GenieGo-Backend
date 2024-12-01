@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Site extends Model
 {
@@ -18,11 +19,6 @@ class Site extends Model
         return $this->hasOne(Store::class);
     }
     
-    public function translations()
-    {
-        return $this->hasMany(SiteTranslation::class);
-    }
-
     public function translation($lang = 'en')
     {
         return $this->translations()->where('language', $lang)->first();

@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Owner;
 use App\Models\Customer;
+use App\Models\Store;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -31,5 +32,6 @@ class DatabaseSeeder extends Seeder
 
         Customer::factory(10)->recycle($users)->create();
         $products = Product::factory(10)->create();
+        $tore=Store::factory()->create();
     }
 }
