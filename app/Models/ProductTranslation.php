@@ -10,7 +10,6 @@ class ProductTranslation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'product_id',
         'language',
         'name',
         'description',

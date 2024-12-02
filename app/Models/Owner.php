@@ -9,8 +9,6 @@ class Owner extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'store_id'];
-
     
     public function store()
     {
