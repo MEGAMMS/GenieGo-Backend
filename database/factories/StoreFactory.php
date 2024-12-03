@@ -2,11 +2,12 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-
 use App\Models\Site;
+
 use App\Models\Store;
 use App\Models\StoreTranslation;
+use Illuminate\Support\Facades\File;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Store>
@@ -20,8 +21,20 @@ class StoreFactory extends Factory
      */
     public function definition(): array
     {
+        // Get all icons from the 'public/fake-icons' directory
+        $iconDirectory = public_path('fake-icons');
+        $icons = File::exists($iconDirectory) 
+            ? File::files($iconDirectory) 
+            : [];
+
+        // Map to relative paths for storage
+        $iconPaths = array_map(function ($file) {
+            return 'fake-icons/' . $file->getFilename();
+        }, $icons);
+
         return [
-            'site_id'=>Site::factory()
+            'site_id' => Site::factory(),
+            'icon' => $this->faker->randomElement($iconPaths),
         ];
     }
 

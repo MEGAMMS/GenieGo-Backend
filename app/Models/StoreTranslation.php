@@ -9,10 +9,7 @@ class StoreTranslation extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'language',
-        'name',
-    ];
+    protected $fillable = ['store_id', 'language', 'name', 'description'];
 
     public function store()
     {

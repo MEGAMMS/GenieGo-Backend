@@ -1,0 +1,104 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Store;
+use Illuminate\Http\Request;
+use App\Models\StoreTranslation;
+use App\Http\Requests\StoreRequest;
+use App\Http\Resources\StoreResource;
+use Illuminate\Support\Facades\Storage;
+
+class StoreController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $stores = Store::with('translations')->get();
+        return StoreResource::collection($stores);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreRequest $request)
+    {
+
+        $iconPath = null;
+        if ($request->hasFile('icon')) {
+            $iconPath = $request->file('icon')->store('stores/icons', 'public');
+        }
+
+        $store = Store::create(['icon' => $iconPath]);
+        // Create translations
+        foreach ($request->translations as $translation) {
+            StoreTranslation::create([
+                'store_id' => $store->id,
+                'language' => $translation['language'],
+                'name' => $translation['name'],
+                'description' => $translation['description'] ?? null,
+            ]);
+        }
+
+        return new StoreResource($store->load('translations'));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $store = Store::with('translations')->findOrFail($id);
+        return new StoreResource($store->load('translations'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $store = Store::findOrFail($id);
+        if ($request->hasFile('icon')) {
+            if ($store->icon) {
+                Storage::disk('public')->delete($store->icon); // Delete old icon
+            }
+            $store->icon = $request->file('icon')->store('stores/icons', 'public');
+        }
+
+        $store->save();
+
+        // Update or create translations
+        foreach ($request->translations as $translation) {
+            StoreTranslation::updateOrCreate(
+                [
+                    'store_id' => $store->id,
+                    'language' => $translation['language'],
+                ],
+                [
+                    'name' => $translation['name'],
+                    'description' => $translation['description'] ?? null,
+                ]
+            );
+        }
+
+        return new StoreResource($store->load('translations'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $store = Store::findOrFail($id);
+        if ($store->icon) {
+            Storage::disk('public')->delete($store->icon);
+        }
+
+        $store->translations()->delete();
+        $store->delete();
+
+        return response()->json(['message' => 'Store deleted successfully!'], 200);
+    }
+}

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Foreign key to 'stores' table
             $table->string('language'); // Language code, e.g., 'en', 'ar'
             $table->string('name'); // Translated name
+            $table->longText('description')->nullable(); // Translated description
             $table->timestamps();
 
             // Unique constraint for store_id and language

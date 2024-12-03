@@ -9,6 +9,10 @@ class Store extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'icon', 
+    ];
+
     public function site()
     {
         return $this->belongsTo(Site::class);

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
+            $table->string('icon')->nullable();
             $table->foreignID('site_id')->constrained('sites')->onDelete('cascade'); // Foreign key to 'sites' table
             $table->timestamps();
         });
