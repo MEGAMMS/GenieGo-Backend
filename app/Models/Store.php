@@ -9,7 +9,9 @@ class Store extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['site_id'];
+    protected $fillable = [
+        'icon', 
+    ];
 
     public function site()
     {

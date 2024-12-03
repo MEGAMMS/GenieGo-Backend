@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Store;
 use App\Models\Product;
 use App\Models\ProductTranslation;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -19,6 +20,7 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
+            'store_id' => Store::factory(),
             'price' => fake()->randomFloat(2, 1, 100), // Generate a price between 1.00 and 100.00
         ];
     }

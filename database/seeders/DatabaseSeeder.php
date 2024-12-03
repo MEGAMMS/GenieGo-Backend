@@ -32,6 +32,6 @@ class DatabaseSeeder extends Seeder
 
         Customer::factory(10)->recycle($users)->create();
         $products = Product::factory(10)->create();
-        $tore=Store::factory()->create();
+        Store::factory()->count(10)->create();
     }
 }

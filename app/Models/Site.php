@@ -19,12 +19,6 @@ class Site extends Model
         return $this->hasOne(Store::class);
     }
     
-    public function translation($lang = 'en')
-    {
-        return $this->translations()->where('language', $lang)->first();
-    }
-
-    
     public function customers()
     {
         return $this->hasMany(Customer::class);
