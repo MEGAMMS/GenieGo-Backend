@@ -18,6 +18,6 @@ class Tag extends Model
 
     public function stores()
     {
-        return $this->hasMany(Store::class);
+        return $this->belongsToMany(Store::class);
     }
 }
