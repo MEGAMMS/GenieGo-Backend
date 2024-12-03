@@ -22,7 +22,7 @@ class StoreFactory extends Factory
     public function definition(): array
     {
         // Get all icons from the 'public/fake-icons' directory
-        $iconDirectory = public_path('fake-icons');
+        $iconDirectory = storage_path('app/public/fake-icons');
         $icons = File::exists($iconDirectory) 
             ? File::files($iconDirectory) 
             : [];
