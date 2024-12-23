@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         $users = User::factory(10)->create();
 
         //Customer::factory(10)->recycle($users)->create();
-        $tags = Tag::factory(100)->create();
+        $tags = Tag::factory(1)->create();
         $customer = Customer::factory()->recycle($user)->create();
         $store = Store::factory()->withTags($tags)->create();
         $products = Product::factory(10)->recycle($store)->create();

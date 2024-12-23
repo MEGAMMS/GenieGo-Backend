@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Store;
-use Illuminate\Http\Request;
-use App\Models\StoreTranslation;
 use App\Http\Requests\StoreRequest;
 use App\Http\Resources\StoreResource;
+use App\Models\Store;
+use App\Models\StoreTranslation;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
@@ -17,6 +17,7 @@ class StoreController extends Controller
     public function index()
     {
         $stores = Store::with('translations')->get();
+
         return StoreResource::collection($stores);
     }
 
@@ -51,6 +52,7 @@ class StoreController extends Controller
     public function show(string $id)
     {
         $store = Store::with('translations')->findOrFail($id);
+
         return new StoreResource($store->load('translations'));
     }
 

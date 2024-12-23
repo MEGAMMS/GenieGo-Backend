@@ -11,18 +11,16 @@ class StoreResource extends JsonResource
         return [
             'id' => $this->id,
             'site' => $this->site,
-            'translations' => $this->translations->map(function ($translation) {
+            'translations' => $this->translations->keyBy('language')->map(function ($translation) {
                 return [
-                    'language' => $translation->language,
                     'name' => $translation->name,
                     'description' => $translation->description,
                 ];
             }),
             'tags' => $this->tags,
-            'icon_url' => $this->icon ? asset('storage/' . $this->icon) : null,
+            'icon_url' => $this->icon ? asset('storage/'.$this->icon) : null,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];
     }
 }
-
