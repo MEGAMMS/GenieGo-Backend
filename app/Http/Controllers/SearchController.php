@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use App\Services\SearchService;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class SearchController extends Controller
     /**
      * Search across products and stores with tag and translation support.
      */
-    public function search(Request $request)
+    public function search(SearchRequest $request)
     {
         $tags = $request->input('tags', []); // Array of tags
         $query = $request->input('query');  // Search query
