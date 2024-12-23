@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 
 Route::get('/hello', function () {
@@ -17,3 +18,5 @@ Route::middleware('auth:sanctum')->get('/user/current', [UserController::class, 
 
 Route::apiResource('products', ProductController::class);
 Route::apiResource('stores', StoreController::class);
+
+Route::get('/search',[SearchController::class,'search']);
