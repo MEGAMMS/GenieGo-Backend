@@ -10,7 +10,7 @@ class Store extends Model
     use HasFactory;
 
     protected $fillable = [
-        'icon', 
+        'icon',
     ];
 
     public function site()
@@ -18,7 +18,6 @@ class Store extends Model
         return $this->belongsTo(Site::class);
     }
 
-    
     public function translations()
     {
         return $this->hasMany(StoreTranslation::class);
@@ -34,18 +33,16 @@ class Store extends Model
         return $this->hasOne(Owner::class);
     }
 
-    
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-    
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
     }
- 
+
     public function products()
     {
         return $this->hasMany(product::class);
