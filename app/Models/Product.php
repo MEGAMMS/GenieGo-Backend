@@ -23,12 +23,16 @@ class Product extends Model
 
     public function tags()
     {
-         return $this->hasMany(Tag::class);
+        return $this->belongsToMany(Tag::class);
     }
 
     public function orders()
     {
-    return $this->belongsToMany(Order::class)->withPivot('quantity');
+        return $this->belongsToMany(Order::class)->withPivot('quantity');
     }
 
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 }
