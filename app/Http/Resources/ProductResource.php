@@ -21,6 +21,7 @@ class ProductResource extends JsonResource
                     'description' => $translation->description,
                 ];
             }),
+            'icon_url' => $this->icon ? asset('storage/'.$this->icon) : null,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];
