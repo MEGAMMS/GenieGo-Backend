@@ -24,11 +24,10 @@ class ProductFactory extends Factory
             'price' => fake()->randomFloat(2, 1, 100), // Generate a price between 1.00 and 100.00
         ];
     }
-
     /**
      * Configure the factory.
      */
-    public function configure()
+    public function configure():static
     {
         return $this->afterCreating(function (Product $product) {
             // Create translations for both 'en' and 'ar' languages

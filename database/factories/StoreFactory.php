@@ -66,4 +66,21 @@ class StoreFactory extends Factory
             }
         });
     }
+
+    /**
+     * Customize with specific translations.
+     */
+    public function withTranslations(array $translations): static
+    {
+        return $this->afterCreating(function (Store $store) use ($translations) {
+            foreach ($translations as $translation) {
+                StoreTranslation::factory()->create([
+                    'product_id' => $store->id,
+                    'language' => $translation['language'],
+                    'name' => $translation['name'] ?? fake()->words(3, true),
+                    'description' => $translation['description'] ?? fake()->paragraph(),
+                ]);
+            }
+        });
+    }
 }
