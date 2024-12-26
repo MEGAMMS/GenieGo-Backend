@@ -26,21 +26,34 @@ class DatabaseSeeder extends Seeder
             'phone' => '+963987654321',
             'password' => 'P@ssw0rd',
         ]);
-
+        Product::factory()
+            ->withTranslations([
+                [
+                    'language' => 'en',
+                    'name' => 'Custom English Name',
+                    'description' => 'Custom English Description',
+                ],
+                [
+                    'language' => 'fr',
+                    'name' => 'Nom personnalisé en français',
+                    'description' => 'Description personnalisée en français',
+                ],
+            ])
+            ->create();
         $users = User::factory(10)->create();
 
         //Customer::factory(10)->recycle($users)->create();
         $tags = Tag::factory(1)->create();
         $customer = Customer::factory()->recycle($user)->create();
         $store = Store::factory()->withTags($tags)->create();
-        $products = Product::factory(30)->recycle($store)->create();
+        $products = Product::factory(30)->withTranslations()->recycle($store)->create();
 
         $owner = Owner::factory()->recycle($store)->recycle($user)->create();
 
         $order = Order::factory()->recycle($customer)->withProducts($products)->create();
 
         Customer::factory(10)->recycle($users)->create();
-        $products = Product::factory(10)->create();
+        $products = Product::factory(10)->withTranslations()->create();
         Store::factory()->count(10)->create();
     }
 }
