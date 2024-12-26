@@ -3,11 +3,10 @@
 namespace Database\Factories;
 
 use App\Models\Site;
-
 use App\Models\Store;
 use App\Models\StoreTranslation;
-use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Store>
@@ -21,15 +20,16 @@ class StoreFactory extends Factory
      */
     public function definition(): array
     {
-        // Get all icons from the 'public/fake-icons' directory
-        $iconDirectory = storage_path('app/public/fake-icons');
-        $icons = File::exists($iconDirectory) 
-            ? File::files($iconDirectory) 
+        $fakeImagesPath = 'fake-images/brands/';
+        // Get all icons from the 'public/fake-images/brands' directory
+        $iconDirectory = storage_path('app/public/'.$fakeImagesPath);
+        $icons = File::exists($iconDirectory)
+            ? File::files($iconDirectory)
             : [];
 
         // Map to relative paths for storage
-        $iconPaths = array_map(function ($file) {
-            return 'fake-icons/' . $file->getFilename();
+        $iconPaths = array_map(function ($file) use ($fakeImagesPath) {
+            return $fakeImagesPath.$file->getFilename();
         }, $icons);
 
         return [
@@ -52,11 +52,12 @@ class StoreFactory extends Factory
 
             StoreTranslation::factory()->create([
                 'store_id' => $store->id,
-                'name' => "اسم متجر عشوائي",
+                'name' => 'اسم متجر عشوائي',
                 'language' => 'ar',
             ]);
         });
     }
+
     public function withTags($tags)
     {
         return $this->afterCreating(function (Store $store) use ($tags) {

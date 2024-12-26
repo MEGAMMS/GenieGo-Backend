@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Store;
 use App\Models\Product;
 use App\Models\ProductTranslation;
+use App\Models\Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\File;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -19,29 +20,51 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $fakeImagesPath = 'fake-images/products/';
+        $iconDirectory = storage_path('app/public/'.$fakeImagesPath);
+        $icons = File::exists($iconDirectory) ? File::files($iconDirectory) : [];
+
+        $iconPaths = array_map(function ($file) use ($fakeImagesPath) {
+            return $fakeImagesPath.$file->getFilename();
+        }, $icons);
+
         return [
             'store_id' => Store::factory(),
-            'price' => fake()->randomFloat(2, 1, 100), // Generate a price between 1.00 and 100.00
+            'icon' => $this->faker->randomElement($iconPaths),
+            'price' => $this->faker->randomFloat(2, 1, 100), // Generate a price between 1.00 and 100.00
         ];
     }
     /**
-     * Configure the factory.
+     * State for adding custom translations.
+     *
+     * @return static
      */
-    public function configure():static
+    public function withTranslations(array $translations = [])
     {
-        return $this->afterCreating(function (Product $product) {
-            // Create translations for both 'en' and 'ar' languages
-            ProductTranslation::factory()->create([
-                'product_id' => $product->id,
-                'language' => 'en',
-            ]);
+        return $this->afterCreating(function (Product $product) use ($translations) {
+            // Default translations (if no custom translations are provided)
+            $defaultTranslations = [
+                [
+                    'language' => 'en',
+                    'name' => $this->faker->word,
+                    'description' => $this->faker->sentence,
+                ],
+                [
+                    'language' => 'ar',
+                    'name' => 'اسم منتج عشوائي',
+                    'description' => 'هذا هو الوصف العشوائي للمنتج.',
+                ],
+            ];
 
-            ProductTranslation::factory()->create([
-                'product_id' => $product->id,
-                'name' => "اسم منتج عشوائي",
-                'description' => "هذا هو الوصف العشوائي للمنتج.",
-                'language' => 'ar',
-            ]);
+            // Merge default translations with custom ones, if provided
+            $translations = $translations ? $translations : $defaultTranslations;
+
+            // Create translations
+            foreach ($translations as $translation) {
+                ProductTranslation::factory()->create(array_merge($translation, [
+                    'product_id' => $product->id,
+                ]));
+            }
         });
     }
 }
