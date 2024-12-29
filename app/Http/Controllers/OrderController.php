@@ -67,6 +67,6 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->delete();
 
-        return $this->ok('Product deleted successfully');
+        return $this->ok('Order deleted successfully');
     }
 }

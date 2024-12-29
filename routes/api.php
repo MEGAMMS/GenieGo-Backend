@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StoreController;
@@ -22,3 +23,5 @@ Route::get('stores/{id}/products', [StoreController::class, 'products']);
 Route::apiResource('stores', StoreController::class);
 
 Route::post('/search', [SearchController::class, 'search']);
+
+Route::middleware('auth:sanctum')->apiResource('orders',[OrderController::class,'order']);
