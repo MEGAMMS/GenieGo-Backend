@@ -55,5 +55,54 @@ class DatabaseSeeder extends Seeder
         Customer::factory(10)->recycle($users)->create();
         $products = Product::factory(10)->withTranslations()->create();
         Store::factory()->count(10)->create();
+
+        $product = Product::factory()
+        ->withTranslations([
+            [
+                'language' => 'en',
+                'name' => 'Laptop',
+                'description' => 'A high-end laptop.',
+            ],
+            [
+                'language' => 'fr',
+                'name' => 'Ordinateur Portable',
+                'description' => 'Un ordinateur portable haut de gamme.',
+            ],
+        ])
+        ->create();
+
+    // Create a store with explicit translations
+    $store = Store::factory()
+        ->withTranslations([
+            [
+                'language' => 'en',
+                'name' => 'top Tech Store',
+            ],
+            [
+                'language' => 'ar',
+                'name' => 'متجر تقني',
+            ],
+        ])
+        ->create();
+    Store::factory()
+        ->withTranslations([
+            [
+                'language' => 'en',
+                'name' => 'Tech Store',
+            ],
+            [
+                'language' => 'ar',
+                'name' => 'متجر تقني',
+            ],
+        ])
+        ->create();
+
+    // Create a tag and attach it
+    $electornicsTag = Tag::factory()->create(['name' => 'electronics']);
+    $helloTag = Tag::factory()->create(['name' => 'hello']);
+        
+    $product->tags()->attach($electornicsTag);
+    $store->tags()->attach($electornicsTag);
+    $store->tags()->attach($helloTag);
     }
 }

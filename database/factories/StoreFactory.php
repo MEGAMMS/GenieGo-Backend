@@ -68,4 +68,38 @@ class StoreFactory extends Factory
             }
         });
     }
+
+        /**
+     * State for adding custom translations.
+     *
+     * @return static
+     */
+    public function withTranslations(array $translations = [])
+    {
+        return $this->afterCreating(function (Store $store) use ($translations) {
+            // Default translations (if no custom translations are provided)
+            $defaultTranslations = [
+                [
+                    'language' => 'en',
+                    'name' => $this->faker->word,
+                    'description' => $this->faker->sentence,
+                ],
+                [
+                    'language' => 'ar',
+                    'name' => 'اسم منتج عشوائي',
+                    'description' => 'هذا هو الوصف العشوائي للمنتج.',
+                ],
+            ];
+
+            // Merge default translations with custom ones, if provided
+            $translations = $translations ? $translations : $defaultTranslations;
+
+            // Create translations
+            foreach ($translations as $translation) {
+                StoreTranslation::factory()->create(array_merge($translation, [
+                    'store_id' => $store->id,
+                ]));
+            }
+        });
+    }
 }
