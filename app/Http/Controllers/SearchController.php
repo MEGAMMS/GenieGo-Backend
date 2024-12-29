@@ -28,9 +28,6 @@ class SearchController extends Controller
         $tags = $request->input('tags', []); // Array of tags
         $query = $request->input('query');  // Search query
 
-        if (!$query) {
-            return $this->error('Query is required', 400);
-        }
 
         $results = $this->searchService->search( $tags, $query);
 

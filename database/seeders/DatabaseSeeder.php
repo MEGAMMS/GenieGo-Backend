@@ -84,11 +84,25 @@ class DatabaseSeeder extends Seeder
             ],
         ])
         ->create();
+    Store::factory()
+        ->withTranslations([
+            [
+                'language' => 'en',
+                'name' => 'Tech Store',
+            ],
+            [
+                'language' => 'ar',
+                'name' => 'متجر تقني',
+            ],
+        ])
+        ->create();
 
     // Create a tag and attach it
-    $tag = Tag::factory()->create(['name' => 'electronics']);
-
-    $product->tags()->attach($tag);
-    $store->tags()->attach($tag);
+    $electornicsTag = Tag::factory()->create(['name' => 'electronics']);
+    $helloTag = Tag::factory()->create(['name' => 'hello']);
+        
+    $product->tags()->attach($electornicsTag);
+    $store->tags()->attach($electornicsTag);
+    $store->tags()->attach($helloTag);
     }
 }

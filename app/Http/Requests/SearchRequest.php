@@ -22,7 +22,7 @@ class SearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'query' => 'required|string|min:3|max:255',   // Query must be a string, between 3 and 255 characters
+            'query' => 'nullable|string|max:255',   // Query must be a string, between 3 and 255 characters
             'tags' => 'nullable|array',                    // Tags must be an array, optional
             'tags.*' => 'nullable|string|distinct|max:50',  // Each tag must be a string, distinct, and max length of 50
         ];
