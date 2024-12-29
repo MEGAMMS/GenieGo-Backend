@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRequest;
+use App\Http\Resources\ProductResource;
 use App\Http\Resources\StoreResource;
 use App\Models\Store;
 use App\Models\StoreTranslation;
@@ -102,5 +103,12 @@ class StoreController extends Controller
         $store->delete();
 
         return response()->json(['message' => 'Store deleted successfully!'], 200);
+    }
+
+    public function products(string $id)
+    {
+        $store = Store::with('products')->findOrFail($id);
+
+        return ProductResource::collection($store->products);
     }
 }
