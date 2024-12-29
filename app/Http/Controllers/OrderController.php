@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Traits\ApiResponses;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    use ApiResponses;
     /**
      * Display the specified resource.
      */
@@ -55,5 +57,16 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         return response()->json(['status'=>$order->status]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->delete();
+
+        return $this->ok('Product deleted successfully');
     }
 }
