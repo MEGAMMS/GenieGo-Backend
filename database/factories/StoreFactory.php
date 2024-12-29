@@ -38,26 +38,6 @@ class StoreFactory extends Factory
         ];
     }
 
-    /**
-     * Configure the factory.
-     */
-    public function configure()
-    {
-        return $this->afterCreating(function (Store $store) {
-            // Create translations for both 'en' and 'ar' languages
-            StoreTranslation::factory()->create([
-                'store_id' => $store->id,
-                'language' => 'en',
-            ]);
-
-            StoreTranslation::factory()->create([
-                'store_id' => $store->id,
-                'name' => 'اسم متجر عشوائي',
-                'language' => 'ar',
-            ]);
-        });
-    }
-
     public function withTags($tags)
     {
         return $this->afterCreating(function (Store $store) use ($tags) {
@@ -68,19 +48,36 @@ class StoreFactory extends Factory
         });
     }
 
-    /**
-     * Customize with specific translations.
+        /**
+     * State for adding custom translations.
+     *
+     * @return static
      */
-    public function withTranslations(array $translations): static
+    public function withTranslations(array $translations = [])
     {
         return $this->afterCreating(function (Store $store) use ($translations) {
+            // Default translations (if no custom translations are provided)
+            $defaultTranslations = [
+                [
+                    'language' => 'en',
+                    'name' => $this->faker->word,
+                    'description' => $this->faker->sentence,
+                ],
+                [
+                    'language' => 'ar',
+                    'name' => 'اسم منتج عشوائي',
+                    'description' => 'هذا هو الوصف العشوائي للمنتج.',
+                ],
+            ];
+
+            // Merge default translations with custom ones, if provided
+            $translations = $translations ? $translations : $defaultTranslations;
+
+            // Create translations
             foreach ($translations as $translation) {
-                StoreTranslation::factory()->create([
-                    'product_id' => $store->id,
-                    'language' => $translation['language'],
-                    'name' => $translation['name'] ?? fake()->words(3, true),
-                    'description' => $translation['description'] ?? fake()->paragraph(),
-                ]);
+                StoreTranslation::factory()->create(array_merge($translation, [
+                    'store_id' => $store->id,
+                ]));
             }
         });
     }
