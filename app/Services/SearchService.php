@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\StoreResource;
 use App\Models\Product;
 use App\Models\Store;
 use App\Models\Tag;
@@ -40,7 +42,9 @@ class SearchService
             }])
             ->get();
         
-            $results = $results->merge($productResults);
+            $productResources = ProductResource::collection($productResults);
+
+            $results = $results->merge($productResources);
 
             // Search Stores matching all tags and query
             $storeResults = Store::whereHas('tags', function ($query) use ($tags) {
@@ -56,31 +60,12 @@ class SearchService
             }])
             ->get();
         
-            $results = $results->merge($storeResults);
+            $storeResources = StoreResource::collection($storeResults);
+
+            $results = $results->merge($storeResources);
         }
 
         return $results;
     }
 
-
-    public function suggest($type, $query)
-    {
-        if (!$query) {
-            return [];
-        }
-
-        $query = trim($query);
-
-        if ($type === 'product') {
-            return Product::where('name', 'LIKE', "%$query%")
-                          ->take(5)
-                          ->pluck('name');
-        } elseif ($type === 'store') {
-            return Store::where('name', 'LIKE', "%$query%")
-                        ->take(5)
-                        ->pluck('name');
-        }
-
-        return [];
-    }
 }
