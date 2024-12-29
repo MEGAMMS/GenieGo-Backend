@@ -52,8 +52,9 @@ class StoreFactory extends Factory
 
             StoreTranslation::factory()->create([
                 'store_id' => $store->id,
-                'name' => 'اسم متجر عشوائي',
                 'language' => 'ar',
+                'name' => 'اسم متجر عشوائي',
+                'description' => 'هذا هو الوصف العشوائي للمنتج.',
             ]);
         });
     }
