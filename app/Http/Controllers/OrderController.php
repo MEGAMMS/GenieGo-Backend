@@ -50,4 +50,10 @@ class OrderController extends Controller
 
         return new OrderResource($order);
     }
+
+    public function update( string $id)
+    {
+        $order = Order::findOrFail($id);
+        return response()->json(['status'=>$order->status]);
+    }
 }
