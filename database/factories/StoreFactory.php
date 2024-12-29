@@ -38,6 +38,27 @@ class StoreFactory extends Factory
         ];
     }
 
+    /**
+     * Configure the factory.
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (Store $store) {
+            // Create translations for both 'en' and 'ar' languages
+            StoreTranslation::factory()->create([
+                'store_id' => $store->id,
+                'language' => 'en',
+            ]);
+
+            StoreTranslation::factory()->create([
+                'store_id' => $store->id,
+                'language' => 'ar',
+                'name' => 'اسم متجر عشوائي',
+                'description' => 'هذا هو الوصف العشوائي للمنتج.',
+            ]);
+        });
+    }
+
     public function withTags($tags)
     {
         return $this->afterCreating(function (Store $store) use ($tags) {
