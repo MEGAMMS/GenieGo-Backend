@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Customer;
-use App\Models\Product;
 use App\Models\Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,10 +19,10 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'customer_id'=>Customer::factory(),
-            'store_id'=>Store::factory(),
-            'total_price'=>fake()->randomFloat(2, 1, 100),
-            'status'=>fake()->randomElement(['delivered','canceled','pending']),
+            'customer_id' => Customer::factory(),
+            'store_id' => Store::factory()->withTranslations(),
+            'total_price' => fake()->randomFloat(2, 1, 100),
+            'status' => fake()->randomElement(['delivered', 'canceled', 'pending']),
         ];
     }
 
@@ -46,7 +45,4 @@ class OrderFactory extends Factory
             $order->update(['total_price' => $totalAmount]);
         });
     }
-
 }
-    
-

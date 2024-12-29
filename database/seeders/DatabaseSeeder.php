@@ -43,66 +43,65 @@ class DatabaseSeeder extends Seeder
         $users = User::factory(10)->create();
 
         //Customer::factory(10)->recycle($users)->create();
-        $tags = Tag::factory(1)->create();
+        $tags = Tag::factory(4)->create();
         $customer = Customer::factory()->recycle($user)->create();
-        $store = Store::factory()->withTags($tags)->create();
-        $products = Product::factory(30)->withTranslations()->recycle($store)->create();
+        $stores = Store::factory(10)->withTranslations()->withTags($tags)->create();
+        $products = Product::factory(30)->withTranslations()->recycle($stores)->create();
 
-        $owner = Owner::factory()->recycle($store)->recycle($user)->create();
+        Owner::factory()->recycle($stores)->recycle($user)->create();
 
-        $order = Order::factory()->recycle($customer)->withProducts($products)->create();
+        Order::factory()->recycle($customer)->withProducts($products)->create();
 
         Customer::factory(10)->recycle($users)->create();
         $products = Product::factory(10)->withTranslations()->create();
-        Store::factory()->count(10)->create();
 
         $product = Product::factory()
-        ->withTranslations([
-            [
-                'language' => 'en',
-                'name' => 'Laptop',
-                'description' => 'A high-end laptop.',
-            ],
-            [
-                'language' => 'fr',
-                'name' => 'Ordinateur Portable',
-                'description' => 'Un ordinateur portable haut de gamme.',
-            ],
-        ])
-        ->create();
+            ->withTranslations([
+                [
+                    'language' => 'en',
+                    'name' => 'Laptop',
+                    'description' => 'A high-end laptop.',
+                ],
+                [
+                    'language' => 'fr',
+                    'name' => 'Ordinateur Portable',
+                    'description' => 'Un ordinateur portable haut de gamme.',
+                ],
+            ])
+            ->create();
 
-    // Create a store with explicit translations
-    $store = Store::factory()
-        ->withTranslations([
-            [
-                'language' => 'en',
-                'name' => 'top Tech Store',
-            ],
-            [
-                'language' => 'ar',
-                'name' => 'متجر تقني',
-            ],
-        ])
-        ->create();
-    Store::factory()
-        ->withTranslations([
-            [
-                'language' => 'en',
-                'name' => 'Tech Store',
-            ],
-            [
-                'language' => 'ar',
-                'name' => 'متجر تقني',
-            ],
-        ])
-        ->create();
+        // Create a store with explicit translations
+        $store = Store::factory()
+            ->withTranslations([
+                [
+                    'language' => 'en',
+                    'name' => 'top Tech Store',
+                ],
+                [
+                    'language' => 'ar',
+                    'name' => 'متجر تقني',
+                ],
+            ])
+            ->create();
+        Store::factory()
+            ->withTranslations([
+                [
+                    'language' => 'en',
+                    'name' => 'Tech Store',
+                ],
+                [
+                    'language' => 'ar',
+                    'name' => 'متجر تقني',
+                ],
+            ])
+            ->create();
 
-    // Create a tag and attach it
-    $electornicsTag = Tag::factory()->create(['name' => 'electronics']);
-    $helloTag = Tag::factory()->create(['name' => 'hello']);
-        
-    $product->tags()->attach($electornicsTag);
-    $store->tags()->attach($electornicsTag);
-    $store->tags()->attach($helloTag);
+        // Create a tag and attach it
+        $electornicsTag = Tag::factory()->create(['name' => 'electronics']);
+        $helloTag = Tag::factory()->create(['name' => 'hello']);
+
+        $product->tags()->attach($electornicsTag);
+        $store->tags()->attach($electornicsTag);
+        $store->tags()->attach($helloTag);
     }
 }

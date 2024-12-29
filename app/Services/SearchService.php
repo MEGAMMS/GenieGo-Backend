@@ -7,7 +7,6 @@ use App\Http\Resources\StoreResource;
 use App\Models\Product;
 use App\Models\Store;
 
-
 class SearchService
 {
     /**
@@ -45,10 +44,9 @@ class SearchService
             }])
             ->get();
 
-
         return [
             'products' => ProductResource::collection($productResults),
-            'stores' => StoreResource::collection($storeResults)
+            'stores' => StoreResource::collection($storeResults),
         ];
     }
 }

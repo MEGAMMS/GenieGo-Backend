@@ -18,7 +18,7 @@ class StoreTranslationFactory extends Factory
     public function definition(): array
     {
         return [
-            'store_id' => Store::factory(), // Use Store factory to generate associated product
+            'store_id' => Store::factory()->withTranslations(), // Use Store factory to generate associated product
             'language' => 'en', // Default language; overridden during specific creation
             'name' => fake()->words(3, true), // Random product name
             'description' => fake()->paragraph(), // Random description

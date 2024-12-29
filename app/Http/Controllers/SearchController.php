@@ -6,9 +6,6 @@ use App\Http\Requests\SearchRequest;
 use App\Models\Tag;
 use App\Services\SearchService;
 use App\Traits\ApiResponses;
-use Illuminate\Http\Request;
-
-use function Laravel\Prompts\error;
 
 class SearchController extends Controller
 {

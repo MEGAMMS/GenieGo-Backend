@@ -29,12 +29,12 @@ class ProductFactory extends Factory
         }, $icons);
 
         return [
-            'store_id' => Store::factory(),
+            'store_id' => Store::factory()->withTranslations(),
             'icon' => $this->faker->randomElement($iconPaths),
             'price' => $this->faker->randomFloat(2, 1, 100), // Generate a price between 1.00 and 100.00
         ];
     }
-    
+
     /**
      * State for adding custom translations.
      *
