@@ -55,7 +55,11 @@ public function it_can_search_products_and_stores_with_translations_and_tags()
     $store->tags()->attach($tag);
 
     // 🛒 Act: Perform search request
-    $response = $this->postJson('/api/search?query=Tech&tags[]=electronics');
+    $response = $this->postJson('/api/search',
+        ['query'=>'tech store',
+          'tags'=>[
+            'electronics'
+          ]]);
 
     // ✅ Assert: Validate JSON structure and content
     $response->assertStatus(200);

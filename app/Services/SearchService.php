@@ -19,7 +19,7 @@ class SearchService
 
         $query = trim($query);
 
-        if (!empty($tags)) {
+        //if (!empty($tags)) {
             // Fetch tags from the database
             $tagModels = Tag::whereIn('name', $tags)->get();
 
@@ -34,11 +34,11 @@ class SearchService
             }, '=', count($tags))
             ->where(function ($queryBuilder) use ($query) {
                 $queryBuilder->WhereHas('translations', function ($translationQuery) use ($query) {
-                                 $translationQuery->where('name', $query); // Exact match with Translation name
+                                $translationQuery->where('name', 'LIKE', "%$query%");
                              });
             })
             ->with(['translations' => function ($translationQuery) use ($query) {
-                $translationQuery->where('name', $query); // Load only the matching translation
+                $translationQuery->where('name', 'LIKE', "%$query%"); 
             }])
             ->get();
         
@@ -52,18 +52,18 @@ class SearchService
             }, '=', count($tags))
             ->where(function ($queryBuilder) use ($query) {
                 $queryBuilder->WhereHas('translations', function ($translationQuery) use ($query) {
-                                 $translationQuery->where('name', $query); // Exact match with Translation name
+                                $translationQuery->where('name', 'LIKE', "%$query%");
                              });
             })
             ->with(['translations' => function ($translationQuery) use ($query) {
-                $translationQuery->where('name', $query); // Load only the matching translation
+                $translationQuery->where('name', 'LIKE', "%$query%");
             }])
             ->get();
         
             $storeResources = StoreResource::collection($storeResults);
 
             $results = $results->merge($storeResources);
-        }
+        
 
         return $results;
     }
