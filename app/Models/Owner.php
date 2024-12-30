@@ -9,14 +9,13 @@ class Owner extends Model
 {
     use HasFactory;
 
-    
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
     public function store()
     {
         return $this->belongTo(Store::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 }

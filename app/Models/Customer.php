@@ -11,15 +11,14 @@ class Customer extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
     }
 
     public function sites()
     {
-        return $this->hasMany(Site::class);
+        return $this->belongsToMany(Site::class, 'customer_sites', 'customer_id', 'site_id');
     }
 
-    
     public function orders()
     {
         return $this->hasMany(Order::class);

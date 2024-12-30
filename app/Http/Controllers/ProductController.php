@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Models\Product;
-use Illuminate\Http\Request;
-use App\Models\ProductTranslation;
 use App\Http\Resources\ProductResource;
+use App\Models\Product;
+use App\Models\ProductTranslation;
 use App\Traits\ApiResponses;
 
 class ProductController extends Controller
 {
     use ApiResponses;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $products = Product::with('translations')->get();
+
         return ProductResource::collection($products);
     }
 
@@ -48,6 +49,7 @@ class ProductController extends Controller
     public function show(string $id)
     {
         $product = Product::with('translations')->findOrFail($id);
+
         return new ProductResource($product);
     }
 

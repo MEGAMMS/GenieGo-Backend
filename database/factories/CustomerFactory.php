@@ -2,9 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Customer>
@@ -19,7 +18,19 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id'=>User::factory()
+            'user_id' => User::factory(),
         ];
+    }
+
+    /**
+     * Attach sites to the customer.
+     *
+     * @param  array|Collection  $sites
+     */
+    public function withSites($sites): static
+    {
+        return $this->afterCreating(function ($customer) use ($sites) {
+            $customer->sites()->attach($sites);
+        });
     }
 }
