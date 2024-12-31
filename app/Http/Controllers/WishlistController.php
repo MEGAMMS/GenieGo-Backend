@@ -27,7 +27,7 @@ class WishlistController extends Controller
         $customer = $request->user()->customer;
 
         // Check if the product already exists in the wishlist
-        if ($customer->customer->wishlist()->where('product_id', $productId)->exists()) {
+        if ($customer->wishlist()->where('product_id', $productId)->exists()) {
             return $this->error('Product is already in your wishlist', 400);
         }
 
@@ -41,6 +41,11 @@ class WishlistController extends Controller
     public function destroy(Request $request,string $productId)
     {
         $customer = $request->user()->customer;
+
+        
+        if (!$customer->wishlist()->where('product_id', $productId)->exists()) {
+            return $this->error('Product is not in your wishlist', 400);
+        }
 
         $customer->wishlist()->detach($productId);
 
