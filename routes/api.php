@@ -17,6 +17,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::middleware('auth:sanctum')->get('/user/current', [UserController::class, 'currentUser']);
+Route::middleware('auth:sanctum')->put('/user', [UserController::class, 'update']);
+Route::middleware('auth:sanctum')->delete('/user', [UserController::class, 'delete']);
 
 Route::apiResource('products', ProductController::class);
 Route::get('stores/{id}/products', [StoreController::class, 'products']);
