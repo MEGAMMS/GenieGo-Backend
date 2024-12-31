@@ -7,6 +7,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/hello', function () {
@@ -35,4 +36,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/sites/{site}', [SiteController::class, 'destroy']);
 });
 
-Route::middleware('auth:sanctum')->apiResource('wishlist',OrderController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/wishlist/add/{productId}', [WishlistController::class, 'store']);
+    Route::delete('/wishlist/remove/{productId}', [WishlistController::class, 'destroy']);
+    Route::get('/wishlist', [WishlistController::class, 'index']);
+});

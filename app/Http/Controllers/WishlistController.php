@@ -21,7 +21,7 @@ class WishlistController extends Controller
         return ProductResource::collection($wishlist);
     }
 
-    public function  update(Request $request,string $productId)
+    public function store(Request $request,string $productId)
     {
 
         $customer = $request->user()->customer;
