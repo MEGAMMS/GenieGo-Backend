@@ -24,7 +24,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function Orders(Request $request)
+    public function index(Request $request)
     {   
         $user = $request->user();
         $orders = Order::where('user_id',$user->id);
@@ -46,7 +46,7 @@ class OrderController extends Controller
         // Attach products with quantities
         foreach ($request->products as $product) {
             $order->products()->attach($product['id'], ['quantity' => $product['quantity']]);
-            $totalPrice=$totalPrice+$product->price;
+            $totalPrice+=$product->priceprice * $product->quantity;
         }
         $order->total_price=$totalPrice;
 

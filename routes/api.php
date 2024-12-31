@@ -24,4 +24,4 @@ Route::apiResource('stores', StoreController::class);
 
 Route::post('/search', [SearchController::class, 'search']);
 
-Route::middleware('auth:sanctum')->apiResource('orders',[OrderController::class,'order']);
+Route::middleware('auth:sanctum')->apiResource('orders',OrderController::class);
