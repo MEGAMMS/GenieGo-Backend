@@ -16,8 +16,10 @@ class OrderController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
+    {   
+        
         $order = Order::findOrFail($id);
+        Gate::authorize('view',$order);
         return new OrderResource($order);
     }
 
@@ -37,8 +39,6 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
         $user = $request->user(); 
-
-        Gate::authorize('create', Order::class);
         
 
         $order = Order::create([
@@ -64,7 +64,9 @@ class OrderController extends Controller
     public function update(Request $request ,string $id)
     {
         $order = Order::findOrFail($id);
+        Gate::authorize('update',$order);
         $order->status=$request->status;
+        $order->save();
         return $this->ok('status has been changed');
     }
 
@@ -74,6 +76,7 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         $order = Order::findOrFail($id);
+        Gate::authorize('delete',$order);
         $order->delete();
 
         return $this->ok('Order deleted successfully');

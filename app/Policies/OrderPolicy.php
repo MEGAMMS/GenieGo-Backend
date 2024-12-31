@@ -13,20 +13,20 @@ class OrderPolicy
      */
     public function view(User $user, Order $order): bool
     {
-        //
+        return $order->customer->user()->is($user);
     }
     /**
      * Determine whether the user can update the model.
      */
     public function update(User $user, Order $order): bool
     {
-        return $order->customer->user === $user;
+        return $this->view($user, $order);
     }
     /**
      * Determine whether the user can delete the model.
      */
     public function delete(User $user, Order $order): bool
     {
-        //
+        return $this->view($user, $order);
     }
 }
