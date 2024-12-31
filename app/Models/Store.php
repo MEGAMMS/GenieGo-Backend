@@ -15,7 +15,7 @@ class Store extends Model
 
     public function site()
     {
-        return $this->belongsTo(Site::class);
+        return $this->hasOne(Site::class);
     }
 
     public function translations()
