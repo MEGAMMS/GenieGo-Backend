@@ -27,7 +27,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {   
         $user = $request->user();
-        $orders = Order::where('user_id',$user->id)->get();
+        $orders = Order::where('customer_id',$user->customer->id)->get();
         return OrderResource::collection($orders);
     }
 
@@ -39,11 +39,13 @@ class OrderController extends Controller
         $user = $request->user(); 
 
         Gate::authorize('create', Order::class);
+        
 
         $order = Order::create([
             'store_id' => $request->store_id,
-            'customer_id' => 1, // Authenticated user as customer
+            'customer_id' => $user->customer->id, // Authenticated user as customer
             'status' => 'pending', // Default status
+            'total_price'=>0,
         ]);
 
         $totalPrice=0;
@@ -59,10 +61,11 @@ class OrderController extends Controller
         return new OrderResource($order);
     }
 
-    public function update( string $id)
+    public function update(Request $request ,string $id)
     {
         $order = Order::findOrFail($id);
-        return response()->json(['status'=>$order->status]);
+        $order->status=$request->status;
+        return $this->ok('status has been changed');
     }
 
     /**
