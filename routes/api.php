@@ -34,3 +34,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/sites/{site}', [SiteController::class, 'update']);
     Route::delete('/sites/{site}', [SiteController::class, 'destroy']);
 });
+
+Route::middleware('auth:sanctum')->apiResource('wishlist',OrderController::class);
