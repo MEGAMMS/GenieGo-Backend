@@ -38,17 +38,19 @@ class OrderController extends Controller
     {
         $order = Order::create([
             'store_id' => $request->store_id,
-            'customer_id' => $request->user()->id, // Authenticated user as customer
+            'customer_id' => $request->user()->customer()->id, // Authenticated user as customer
             'status' => 'pending', // Default status
         ]);
-
+        $order->save();
         $totalPrice=0;
         // Attach products with quantities
         foreach ($request->products as $product) {
             $order->products()->attach($product['id'], ['quantity' => $product['quantity']]);
-            $totalPrice+=$product->priceprice * $product->quantity;
+            $order->save();
+            $totalPrice+=$product['price'] * $product['quantity'];
         }
         $order->total_price=$totalPrice;
+        $order->save();
 
         return new OrderResource($order);
     }
