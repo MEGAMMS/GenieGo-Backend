@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Site;
 use App\Models\Store;
 use App\Models\StoreTranslation;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -33,7 +32,6 @@ class StoreFactory extends Factory
         }, $icons);
 
         return [
-            'site_id' => Site::factory(),
             'icon' => $this->faker->randomElement($iconPaths),
         ];
     }
