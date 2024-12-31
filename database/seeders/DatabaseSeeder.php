@@ -27,8 +27,8 @@ class DatabaseSeeder extends Seeder
             'password' => 'P@ssw0rd',
         ]);
         $siteForNoOne = Site::factory()->create();
-        $sites = Site::factory(10)->create();
-        $testCustomer = Customer::factory()->withSites($sites)->recycle($testUser)->create();
+        $testCustomer = Customer::factory()->recycle($testUser)->create();
+        $sites = Site::factory(10)->recycle($testCustomer)->create();
 
         Product::factory()
             ->withTranslations([
