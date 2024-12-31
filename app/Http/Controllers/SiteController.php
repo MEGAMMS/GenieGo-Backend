@@ -7,7 +7,6 @@ use App\Http\Resources\SiteResource;
 use App\Models\Site;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class SiteController extends Controller
@@ -39,14 +38,14 @@ class SiteController extends Controller
 
     public function store(SiteRequest $request)
     {
-        $site = Auth::user()->customer()->sites()->create($request->validated());
+        $site = $request->user()->customer->sites()->create($request->validated());
 
         return new SiteResource($site);
     }
 
     public function update(SiteRequest $request, Site $site)
     {
-        $this->authorize('update', $site); // Use policy
+        Gate::authorize('update', $site); // Use policy
         $site->update($request->validated());
 
         return new SiteResource($site);
@@ -54,7 +53,7 @@ class SiteController extends Controller
 
     public function destroy(Site $site)
     {
-        $this->authorize('delete', $site); // Use policy
+        Gate::authorize('delete', $site); // Use policy
         $site->delete();
 
         return response()->json(['message' => 'Site deleted successfully']);
