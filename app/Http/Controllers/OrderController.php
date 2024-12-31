@@ -27,8 +27,8 @@ class OrderController extends Controller
     public function index(Request $request)
     {   
         $user = $request->user();
-        $orders = Order::where('user_id',$user->id);
-        return new OrderResource($orders);
+        $orders = Order::where('user_id',$user->id)->get();
+        return OrderResource::collection($orders);
     }
 
     /**
