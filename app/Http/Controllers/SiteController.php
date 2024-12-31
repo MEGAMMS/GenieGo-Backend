@@ -8,6 +8,7 @@ use App\Models\Site;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class SiteController extends Controller
 {
@@ -31,7 +32,7 @@ class SiteController extends Controller
 
     public function show(Site $site)
     {
-        $this->authorize('view', $site); // Use policy
+        Gate::authorize('view', $site); // Use policy
 
         return new SiteResource($site);
     }
