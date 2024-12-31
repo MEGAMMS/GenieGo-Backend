@@ -19,7 +19,6 @@ return new class () extends Migration {
             $table->timestamps();
 
             // Add a check constraint to ensure exactly one of customer_id or store_id is non-null
-            $table->check('customer_id IS NOT NULL XOR store_id IS NOT NULL');
         });
 
     }

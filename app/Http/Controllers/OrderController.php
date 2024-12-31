@@ -36,12 +36,18 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
+        $user = $request->user(); 
+
+        if (!$user->customer) {
+            return response()->json(['error' => 'User does not have an associated customer record'], 400);
+        }    
+
         $order = Order::create([
             'store_id' => $request->store_id,
-            'customer_id' => $request->user()->customer()->id, // Authenticated user as customer
+            'customer_id' => $user->customer->id, // Authenticated user as customer
             'status' => 'pending', // Default status
         ]);
-        $order->save();
+        
         $totalPrice=0;
         // Attach products with quantities
         foreach ($request->products as $product) {
