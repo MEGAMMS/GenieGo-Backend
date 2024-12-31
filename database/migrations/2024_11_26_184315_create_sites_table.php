@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,8 +14,14 @@ return new class extends Migration
             $table->id();
             $table->string('name'); // site's name
             $table->text('address'); // site's address
+            $table->foreignId('customer_id')->nullable()->constrained()->onDelete('cascade'); // Foreign key to 'customers' table
+            $table->foreignId('store_id')->nullable()->constrained()->onDelete('cascade'); // Foreign key to 'stores' table
             $table->timestamps();
+
+            // Add a check constraint to ensure exactly one of customer_id or store_id is non-null
+            $table->check('customer_id IS NOT NULL XOR store_id IS NOT NULL');
         });
+
     }
 
     /**

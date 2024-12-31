@@ -14,14 +14,14 @@ class Site extends Model
         'address',
     ];
 
-    public function store()
+    public function customer()
     {
-        // A Site belongs to one Customer via pivot table
-        return $this->belongsToMany(Customer::class, 'customer_sites', 'site_id', 'customer_id')->withTimestamps();
+        return $this->belongsTo(Customer::class);
     }
 
-    public function customers()
+    public function store()
     {
-        return $this->belongsToMany(Customer::class);
+        // A Site belongs to one Store
+        return $this->belongsTo(Store::class);
     }
 }
