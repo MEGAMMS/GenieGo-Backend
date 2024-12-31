@@ -6,10 +6,10 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Owner;
 use App\Models\Product;
+use App\Models\Site;
 use App\Models\Store;
 use App\Models\Tag;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,12 +20,16 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        $user = User::factory()->create([
+        $testUser = User::factory()->create([
             'username' => 'test',
             'email' => 'test@example.com',
             'phone' => '+963987654321',
             'password' => 'P@ssw0rd',
         ]);
+        $siteForNoOne = Site::factory()->create();
+        $sites = Site::factory(10)->create();
+        $testCustomer = Customer::factory()->withSites($sites)->recycle($testUser)->create();
+
         Product::factory()
             ->withTranslations([
                 [
@@ -34,23 +38,23 @@ class DatabaseSeeder extends Seeder
                     'description' => 'Custom English Description',
                 ],
                 [
-                    'language' => 'fr',
-                    'name' => 'Nom personnalisé en français',
-                    'description' => 'Description personnalisée en français',
+                    'language' => 'ar',
+                    'name' => 'اثممخخخخخخخخخخ',
+                    'description' => 'ثامخخخمنشيسبت',
                 ],
             ])
             ->create();
         $users = User::factory(10)->create();
 
-        //Customer::factory(10)->recycle($users)->create();
+        Customer::factory(10)->recycle($users)->create();
         $tags = Tag::factory(4)->create();
-        $customer = Customer::factory()->recycle($user)->create();
         $stores = Store::factory(10)->withTranslations()->withTags($tags)->create();
         $products = Product::factory(30)->withTranslations()->recycle($stores)->create();
 
-        Owner::factory()->recycle($stores)->recycle($user)->create();
+        Order::factory()->recycle($testCustomer)->withProducts($products)->create();
+        Owner::factory()->recycle($stores)->recycle($testUser)->create();
 
-        Order::factory()->recycle($customer)->withProducts($products)->create();
+        Site::factory(10)->recycle($testUser)->create();
 
         Customer::factory(10)->recycle($users)->create();
         $products = Product::factory(10)->withTranslations()->create();
@@ -63,9 +67,8 @@ class DatabaseSeeder extends Seeder
                     'description' => 'A high-end laptop.',
                 ],
                 [
-                    'language' => 'fr',
-                    'name' => 'Ordinateur Portable',
-                    'description' => 'Un ordinateur portable haut de gamme.',
+                    'language' => 'ar',
+                    'name' => 'اثمثمثخثخثتنمشيتنمششيسبتنمكبشيستنمكشسشبتنمكشيسبتمكشيسبتنمكشسيبتنمكشيسبتنمكشيسبتنمك',
                 ],
             ])
             ->create();

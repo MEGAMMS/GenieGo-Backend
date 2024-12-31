@@ -14,7 +14,7 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'store_id' => $this->store->id,
+            'store' => new StoreResource($this->store),
             'price' => $this->price,
             'translations' => $this->translations->keyBy('language')->map(function ($translation) {
                 return [
