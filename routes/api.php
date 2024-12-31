@@ -25,12 +25,6 @@ Route::apiResource('stores', StoreController::class);
 
 Route::post('/search', [SearchController::class, 'search']);
 
-Route::middleware('auth:sanctum')->apiResource('orders',OrderController::class);
+Route::middleware('auth:sanctum')->apiResource('orders', OrderController::class);
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/sites', [SiteController::class, 'index']);
-    Route::get('/sites/{site}', [SiteController::class, 'show']);
-    Route::post('/sites', [SiteController::class, 'store']);
-    Route::put('/sites/{site}', [SiteController::class, 'update']);
-    Route::delete('/sites/{site}', [SiteController::class, 'destroy']);
-});
+Route::middleware('auth:sanctum')->apiResource('sites', SiteController::class);

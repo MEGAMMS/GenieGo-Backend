@@ -28,7 +28,8 @@ class DatabaseSeeder extends Seeder
         ]);
         /* $siteForNoOne = Site::factory()->create(); */
         $testCustomer = Customer::factory()->recycle($testUser)->create();
-        $sites = Site::factory(10)->recycle($testCustomer)->create();
+        Site::factory(10)->recycle($testCustomer)->create();
+        Site::factory(10)->create();
 
         Product::factory()
             ->withTranslations([
@@ -54,9 +55,6 @@ class DatabaseSeeder extends Seeder
         Order::factory()->recycle($testCustomer)->withProducts($products)->create();
         Owner::factory()->recycle($stores)->recycle($testUser)->create();
 
-        Site::factory(10)->recycle($testUser)->create();
-
-        Customer::factory(10)->recycle($users)->create();
         $products = Product::factory(10)->withTranslations()->create();
 
         $product = Product::factory()
