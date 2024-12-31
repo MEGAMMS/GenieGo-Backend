@@ -10,7 +10,7 @@ class StoreResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'site' => $this->site,
+            'site' => new SiteResource($this->site),
             'translations' => $this->translations->keyBy('language')->map(function ($translation) {
                 return [
                     'name' => $translation->name,

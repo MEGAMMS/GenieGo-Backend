@@ -14,7 +14,7 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'store' => new StoreResource($this->store),
+            'store_id' => $this->store->id,
             'price' => $this->price,
             'translations' => $this->translations->keyBy('language')->map(function ($translation) {
                 return [
@@ -24,8 +24,8 @@ class ProductResource extends JsonResource
             }),
             'icon_url' => $this->icon ? asset('storage/'.$this->icon) : null,
             'tags' => $this->tags,
-            'created_at' => $this->created_at->toDateTimeString(),
-            'updated_at' => $this->updated_at->toDateTimeString(),
+            /* 'created_at' => $this->created_at->toDateTimeString(), */
+            /* 'updated_at' => $this->updated_at->toDateTimeString(), */
         ];
     }
 }
