@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             'phone' => '+963987654321',
             'password' => 'P@ssw0rd',
         ]);
-        $siteForNoOne = Site::factory()->create();
+        /* $siteForNoOne = Site::factory()->create(); */
         $testCustomer = Customer::factory()->recycle($testUser)->create();
         $sites = Site::factory(10)->recycle($testCustomer)->create();
 

@@ -18,9 +18,9 @@ return new class () extends Migration {
             $table->foreignId('store_id')->nullable()->constrained()->onDelete('cascade'); // Foreign key to 'stores' table
             $table->timestamps();
 
-            // Add a check constraint to ensure exactly one of customer_id or store_id is non-null
+            // Add a check constraint using Laravel's check method
+            /* $table->check('(customer_id IS NOT NULL AND store_id IS NULL) OR (customer_id IS NULL AND store_id IS NOT NULL)'); */
         });
-
     }
 
     /**

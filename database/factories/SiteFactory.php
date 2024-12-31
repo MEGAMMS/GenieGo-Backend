@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Customer;
+use App\Models\Store;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +19,12 @@ class SiteFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>fake()->name(),
-            'address'=>fake()->address(),
+
+            'store_id' => Store::factory()->withTranslations(),
+            'customer_id' => Customer::factory(),
+            'name' => fake()->name(),
+            'address' => fake()->address(),
+
         ];
     }
 }
