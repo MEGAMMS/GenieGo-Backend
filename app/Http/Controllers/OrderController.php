@@ -6,8 +6,8 @@ use App\Http\Requests\OrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Traits\ApiResponses;
-use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class OrderController extends Controller
 {
@@ -38,16 +38,14 @@ class OrderController extends Controller
     {
         $user = $request->user(); 
 
-        if (!$user->customer) {
-            return response()->json(['error' => 'User does not have an associated customer record'], 400);
-        }    
+        Gate::authorize('create', Order::class);
 
         $order = Order::create([
             'store_id' => $request->store_id,
-            'customer_id' => $user->customer->id, // Authenticated user as customer
+            'customer_id' => 1, // Authenticated user as customer
             'status' => 'pending', // Default status
         ]);
-        
+
         $totalPrice=0;
         // Attach products with quantities
         foreach ($request->products as $product) {
