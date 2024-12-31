@@ -21,7 +21,7 @@ class WishlistController extends Controller
         return ProductResource::collection($wishlist);
     }
 
-    public function store(Request $request,$productId)
+    public function  update(Request $request,string $productId)
     {
 
         $customer = $request->user()->customer;
@@ -36,5 +36,14 @@ class WishlistController extends Controller
 
         return $this->ok('Product added to wishlist');
         
+    }
+
+    public function destroy(Request $request,string $productId)
+    {
+        $customer = $request->user()->customer;
+
+        $customer->wishlist()->detach($productId);
+
+        return $this->ok('Product removed from wishlist');
     }
 }
