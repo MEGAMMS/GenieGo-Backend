@@ -104,6 +104,5 @@ class DatabaseSeeder extends Seeder
         $product->tags()->attach($electornicsTag);
         $store->tags()->attach($electornicsTag);
         $store->tags()->attach($helloTag);
-        $product5=Product::factory()->create(['id'=>305]);
     }
 }
