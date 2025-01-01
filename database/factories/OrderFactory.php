@@ -20,7 +20,6 @@ class OrderFactory extends Factory
     {
         return [
             'customer_id' => Customer::factory(),
-            'store_id' => Store::factory()->withTranslations(),
             'total_price' => fake()->randomFloat(2, 1, 100),
             'status' => fake()->randomElement(['delivered', 'canceled', 'pending']),
         ];
