@@ -31,6 +31,14 @@ class DatabaseSeeder extends Seeder
         Site::factory(10)->recycle($testCustomer)->create();
         Site::factory(10)->create();
 
+        $testUser2 = User::factory()->create([
+            'username' => 'test2',
+            'email' => 'test2@example.com',
+            'phone' => '+963987654322',
+            'password' => 'P@ssw0rd',
+        ]);
+        $testOwner = Owner::factory()->recycle($testUser2)->create();
+
         Product::factory()
             ->withTranslations([
                 [

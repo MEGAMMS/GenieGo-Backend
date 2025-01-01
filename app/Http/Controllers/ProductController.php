@@ -7,6 +7,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Models\ProductTranslation;
 use App\Traits\ApiResponses;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -27,8 +28,9 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        $owner = Auth::user()->owner;
         // Create product
-        $product = Product::create(['price' => $request->price,'stock'=>$request->stock]);
+        $product = Product::create(['price' => $request->price,'stock'=>$request->stock,'store_id'=>$owner->user_id]);
 
         // Create translations
         foreach ($request->translations as $translation) {
