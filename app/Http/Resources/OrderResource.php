@@ -21,7 +21,7 @@ class OrderResource extends JsonResource
             'products' => $this->products->map(function ($product) {
                 return [
                     'id' => $product->id,
-                    'quantity' => $product->quantity,
+                    'quantity' => $product->pivot->quantity,
                 ];
             }),
             /* 'created_at' => $this->created_at->toDateTimeString(), */
