@@ -28,7 +28,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         // Create product
-        $product = Product::create(['price' => $request->price]);
+        $product = Product::create(['price' => $request->price,'stock'=>$request->stock]);
 
         // Create translations
         foreach ($request->translations as $translation) {
