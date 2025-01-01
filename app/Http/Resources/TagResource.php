@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrderResource extends JsonResource
+class TagResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,7 @@ class OrderResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'total_price' => $this->total_price,
-            'status' => $this->status,
-            'products' => ProductResource::collection($this->products),
+            'name' => $this->name,
             /* 'created_at' => $this->created_at->toDateTimeString(), */
             /* 'updated_at' => $this->updated_at->toDateTimeString(), */
         ];

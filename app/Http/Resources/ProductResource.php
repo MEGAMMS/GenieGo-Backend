@@ -23,7 +23,8 @@ class ProductResource extends JsonResource
                 ];
             }),
             'icon_url' => $this->icon ? asset('storage/'.$this->icon) : null,
-            'tags' => $this->tags,
+            'tags' => TagResource::collection($this->tags),
+
             /* 'created_at' => $this->created_at->toDateTimeString(), */
             /* 'updated_at' => $this->updated_at->toDateTimeString(), */
         ];

@@ -16,11 +16,6 @@ class Order extends Model
         'status',
     ];
 
-    public function store()
-    {
-        return $this->belongsTo(Store::class);
-    }
-
     public function customer()
     {
         return $this->belongsTo(Customer::class);
