@@ -51,11 +51,14 @@ class OrderController extends Controller
         $totalPrice=0;
         // Attach products with quantities
         foreach ($request->products as $product) {
-            $productModel=Product::findorfail($product['id']);
+
+            $productModel=Product::findOrFail($product['id']);
+
             // Check stock availability
             if (!$productModel->inStock($product['quantity'])) {
                 return $this->error('Insufficient stock.', 400);
             }
+            
             $productModel->reduceStock($product['quantity']);
             
             $order->products()->attach($product['id'], ['quantity' => $product['quantity']]);
@@ -84,6 +87,12 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         Gate::authorize('delete',$order);
+
+        foreach($order->products as $product)
+        {
+            $productModel=Product::findOrFail($product['id']);
+            $productModel->increaseStock((int) $product['quantity']);
+        }
         $order->delete();
 
         return $this->ok('Order deleted successfully');
