@@ -42,7 +42,6 @@ class OrderController extends Controller
         
 
         $order = Order::create([
-            'store_id' => $request->store_id,
             'customer_id' => $user->customer->id, // Authenticated user as customer
             'status' => 'pending', // Default status
             'total_price'=>0,
