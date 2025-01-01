@@ -51,9 +51,15 @@ class OrderController extends Controller
         $totalPrice=0;
         // Attach products with quantities
         foreach ($request->products as $product) {
+            $productModel=Product::findorfail($product['id']);
+            // Check stock availability
+            if (!$productModel->inStock($product['quantity'])) {
+                return $this->error('Insufficient stock.', 400);
+            }
+            $productModel->reduceStock($product['quantity']);
+            
             $order->products()->attach($product['id'], ['quantity' => $product['quantity']]);
             $order->save();
-            $productModel=Product::findorfail($product['id']);
             $totalPrice+=$productModel->price * $product['quantity'];
         }
         $order->total_price=$totalPrice;
