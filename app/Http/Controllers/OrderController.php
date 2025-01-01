@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrderRequest;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Models\Product;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -52,7 +53,8 @@ class OrderController extends Controller
         foreach ($request->products as $product) {
             $order->products()->attach($product['id'], ['quantity' => $product['quantity']]);
             $order->save();
-            $totalPrice+=$product['price'] * $product['quantity'];
+            $productModel=Product::findorfail($product['id']);
+            $totalPrice+=$productModel->price * $product['quantity'];
         }
         $order->total_price=$totalPrice;
         $order->save();
