@@ -18,7 +18,12 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'total_price' => $this->total_price,
             'status' => $this->status,
-            'products' => ProductResource::collection($this->products),
+            'products' => $this->products->map(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'quantity' => $product->quantity,
+                ];
+            }),
             /* 'created_at' => $this->created_at->toDateTimeString(), */
             /* 'updated_at' => $this->updated_at->toDateTimeString(), */
         ];
