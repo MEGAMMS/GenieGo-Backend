@@ -15,6 +15,7 @@ return new class () extends Migration {
             $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Foreign key to 'stores' table
             $table->string('icon')->nullable();
             $table->decimal('price', 10, 2); // Product price
+            $table->integer('stock');
             $table->timestamps();
         });
     }
