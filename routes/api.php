@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user/current', [UserController::class, 
 Route::middleware('auth:sanctum')->put('/user', [UserController::class, 'update']);
 Route::middleware('auth:sanctum')->delete('/user', [UserController::class, 'delete']);
 
-Route::apiResource('products', ProductController::class);
+Route::middleware('auth:sanctum')->apiResource('products', ProductController::class);
 Route::get('stores/{id}/products', [StoreController::class, 'products']);
 
 Route::apiResource('stores', StoreController::class);

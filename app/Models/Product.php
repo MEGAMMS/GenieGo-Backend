@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['price'];
+    protected $fillable = ['price','stock','store_id'];
 
     public function translations()
     {
@@ -34,5 +34,33 @@ class Product extends Model
     public function store()
     {
         return $this->belongsTo(Store::class);
+    }
+
+    /**
+     * Check if the product is in stock.
+     */
+    public function inStock(int $quantity): bool
+    {
+        return $this->stock >= $quantity;
+    }
+
+    /**
+     * Reduce stock after a purchase.
+     */
+    public function reduceStock(int $quantity): void
+    {
+        if ($this->inStock($quantity)) {
+            $this->decrement('stock', $quantity);
+        } else {
+            throw new \Exception('Insufficient stock available.');
+        }
+    }
+
+    /**
+     * Increase stock (e.g., during restocking or returns).
+     */
+    public function increaseStock(int $quantity): void
+    {
+        $this->increment('stock', $quantity);
     }
 }
