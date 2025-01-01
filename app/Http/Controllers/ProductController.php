@@ -66,6 +66,11 @@ class ProductController extends Controller
             $product->update(['price' => $request->price]);
         }
 
+        // Update product stock if provided
+        if ($request->has('stock')) {
+            $product->update(['stock' => $request->stock]);
+        }
+
         // Update translations
         foreach ($request->translations as $translation) {
             $productTranslation = ProductTranslation::firstOrNew([
