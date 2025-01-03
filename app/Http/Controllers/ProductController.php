@@ -30,7 +30,7 @@ class ProductController extends Controller
     {
         $owner = Auth::user()->owner;
         // Create product
-        $product = Product::create(['price' => $request->price,'stock'=>$request->stock,'store_id'=>$owner->user_id]);
+        $product = Product::create(['price' => $request->price,'stock'=>$request->stock,'store_id'=>$owner->store_id]);
 
         // Create translations
         foreach ($request->translations as $translation) {

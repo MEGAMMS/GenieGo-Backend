@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'test2',
             'email' => 'test2@example.com',
             'phone' => '+963987654322',
-            'password' => 'P@ssw0rd',
+            'password' => 'P@ssw0rd2',
         ]);
         $testOwner = Owner::factory()->recycle($testUser2)->create();
 
