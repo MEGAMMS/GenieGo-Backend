@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 class WishlistController extends Controller
 {
     use ApiResponses;
+
     /**
      * Display the specified resource.
      */
     public function index(Request $request)
-    {   
+    {
         $user = $request->user();
 
         $wishlist = $user->customer->wishlist()->get();
@@ -21,7 +22,7 @@ class WishlistController extends Controller
         return ProductResource::collection($wishlist);
     }
 
-    public function store(Request $request,string $productId)
+    public function store(Request $request, string $productId)
     {
 
         $customer = $request->user()->customer;
@@ -35,15 +36,14 @@ class WishlistController extends Controller
         $customer->wishlist()->attach($productId);
 
         return $this->ok('Product added to wishlist');
-        
+
     }
 
-    public function destroy(Request $request,string $productId)
+    public function destroy(Request $request, string $productId)
     {
         $customer = $request->user()->customer;
 
-        
-        if (!$customer->wishlist()->where('product_id', $productId)->exists()) {
+        if (! $customer->wishlist()->where('product_id', $productId)->exists()) {
             return $this->error('Product is not in your wishlist', 400);
         }
 

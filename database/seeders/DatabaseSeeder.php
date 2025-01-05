@@ -29,8 +29,7 @@ class DatabaseSeeder extends Seeder
         /* $siteForNoOne = Site::factory()->create(); */
         $testCustomer = Customer::factory()->recycle($testUser)->create();
         Site::factory(10)->recycle($testCustomer)->create();
-        Site::factory(10)->create();
-        
+
         $ownerUser = User::factory()->create([
             'username' => 'test2',
             'email' => 'test2@example.com',
@@ -51,10 +50,10 @@ class DatabaseSeeder extends Seeder
             ])
             ->create();
         $testOwner = Owner::factory()->recycle($ownerUser)->create();
-        
+
         Product::factory()
-        ->withTranslations([
-            [
+            ->withTranslations([
+                [
                     'language' => 'en',
                     'name' => 'Custom English Name',
                     'description' => 'Custom English Description',
@@ -64,19 +63,17 @@ class DatabaseSeeder extends Seeder
                     'name' => 'اثممخخخخخخخخخخ',
                     'description' => 'ثامخخخمنشيسبت',
                 ],
-                ])
-                ->create();
-                $users = User::factory(10)->create();
-                
-                Customer::factory(10)->recycle($users)->create();
-                $tags = Tag::factory(4)->create();
-                $stores = Store::factory(10)->withTranslations()->withTags($tags)->create();
-                $products = Product::factory(30)->withTranslations()->recycle($stores)->create();
-                
-            Order::factory()->recycle($testCustomer)->withProducts($products)->create();
-            Owner::factory()->recycle($stores)->recycle($testUser)->create();
-            
-        $products = Product::factory(10)->withTranslations()->create();
+            ])
+            ->create();
+        $users = User::factory(10)->create();
+
+        Customer::factory(10)->recycle($users)->create();
+        $tags = Tag::factory(4)->create();
+        $stores = Store::factory(10)->withTranslations()->withTags($tags)->create();
+        $products = Product::factory(30)->withTags($tags)->withTranslations()->recycle($stores)->create();
+
+        Order::factory()->recycle($testCustomer)->withProducts($products)->create();
+        Owner::factory()->recycle($stores)->recycle($testUser)->create();
 
         $product = Product::factory()
             ->withTranslations([
@@ -91,7 +88,7 @@ class DatabaseSeeder extends Seeder
                 ],
             ])
             ->create();
-            
+
         Store::factory()
             ->withTranslations([
                 [
@@ -105,7 +102,6 @@ class DatabaseSeeder extends Seeder
             ])
             ->create();
 
-        // Create a tag and attach it
         $electornicsTag = Tag::factory()->create(['name' => 'electronics']);
         $helloTag = Tag::factory()->create(['name' => 'hello']);
 
