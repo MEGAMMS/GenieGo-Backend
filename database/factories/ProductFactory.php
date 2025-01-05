@@ -30,8 +30,9 @@ class ProductFactory extends Factory
 
         return [
             'store_id' => Store::factory()->withTranslations(),
-            'icon' => $this->faker->randomElement($iconPaths),
-            'price' => $this->faker->randomFloat(2, 1, 100), // Generate a price between 1.00 and 100.00
+            'icon' => fake()->randomElement($iconPaths),
+            'price' =>fake()->randomFloat(2, 1, 100), // Generate a price between 1.00 and 100.00
+            'stock' => fake()->numberBetween(100, 1000),
         ];
     }
 

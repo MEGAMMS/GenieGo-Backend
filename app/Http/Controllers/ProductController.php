@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductTranslation;
 use App\Traits\ApiResponses;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
@@ -64,6 +65,8 @@ class ProductController extends Controller
         // Find product
         $product = Product::findOrFail($id);
 
+        Gate::authorize('update',$product);
+
         // Update product price if provided
         if ($request->has('price')) {
             $product->update(['price' => $request->price]);
@@ -95,6 +98,8 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
+        Gate::authorize('delete',$product);
+        
         // Delete associated translations
         $product->translations()->delete();
 

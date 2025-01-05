@@ -21,7 +21,19 @@ Route::middleware('auth:sanctum')->get('/user/current', [UserController::class, 
 Route::middleware('auth:sanctum')->put('/user', [UserController::class, 'update']);
 Route::middleware('auth:sanctum')->delete('/user', [UserController::class, 'delete']);
 
-Route::middleware('auth:sanctum')->apiResource('products', ProductController::class);
+Route::prefix('products')->group(function () {
+    // Public routes (no authentication required)
+    Route::get('/', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/{product}', [ProductController::class, 'show'])->name('products.show');
+
+    // Protected routes (require authentication)
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/', [ProductController::class, 'store'])->name('products.store');
+        Route::put('/{product}', [ProductController::class, 'update'])->name('products.update');
+        Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+    });
+});
+
 Route::get('stores/{id}/products', [StoreController::class, 'products']);
 
 Route::apiResource('stores', StoreController::class);
@@ -35,4 +47,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/wishlist/{productId}', [WishlistController::class, 'destroy']);
     Route::get('/wishlist', [WishlistController::class, 'index']);
 });
+
 Route::middleware('auth:sanctum')->apiResource('sites', SiteController::class);
