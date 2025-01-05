@@ -44,7 +44,7 @@ class User extends Authenticatable
 
     public function owner()
     {
-        return $this->belongsTo(Owner::class);
+        return $this->hasOne(Owner::class);
     }
 
     /**

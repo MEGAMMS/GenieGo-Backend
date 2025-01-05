@@ -30,18 +30,31 @@ class DatabaseSeeder extends Seeder
         $testCustomer = Customer::factory()->recycle($testUser)->create();
         Site::factory(10)->recycle($testCustomer)->create();
         Site::factory(10)->create();
-
-        $testUser2 = User::factory()->create([
+        
+        $ownerUser = User::factory()->create([
             'username' => 'test2',
             'email' => 'test2@example.com',
             'phone' => '+963987654322',
             'password' => 'P@ssw0rd2',
         ]);
-        $testOwner = Owner::factory()->recycle($testUser2)->create();
-
-        Product::factory()
+        // Create a store with explicit translations
+        $store = Store::factory()
             ->withTranslations([
                 [
+                    'language' => 'en',
+                    'name' => 'top Tech Store',
+                ],
+                [
+                    'language' => 'ar',
+                    'name' => 'متجر تقني',
+                ],
+            ])
+            ->create();
+        $testOwner = Owner::factory()->recycle($ownerUser)->create();
+        
+        Product::factory()
+        ->withTranslations([
+            [
                     'language' => 'en',
                     'name' => 'Custom English Name',
                     'description' => 'Custom English Description',
@@ -51,18 +64,18 @@ class DatabaseSeeder extends Seeder
                     'name' => 'اثممخخخخخخخخخخ',
                     'description' => 'ثامخخخمنشيسبت',
                 ],
-            ])
-            ->create();
-        $users = User::factory(10)->create();
-
-        Customer::factory(10)->recycle($users)->create();
-        $tags = Tag::factory(4)->create();
-        $stores = Store::factory(10)->withTranslations()->withTags($tags)->create();
-        $products = Product::factory(30)->withTranslations()->recycle($stores)->create();
-
-        Order::factory()->recycle($testCustomer)->withProducts($products)->create();
-        Owner::factory()->recycle($stores)->recycle($testUser)->create();
-
+                ])
+                ->create();
+                $users = User::factory(10)->create();
+                
+                Customer::factory(10)->recycle($users)->create();
+                $tags = Tag::factory(4)->create();
+                $stores = Store::factory(10)->withTranslations()->withTags($tags)->create();
+                $products = Product::factory(30)->withTranslations()->recycle($stores)->create();
+                
+            Order::factory()->recycle($testCustomer)->withProducts($products)->create();
+            Owner::factory()->recycle($stores)->recycle($testUser)->create();
+            
         $products = Product::factory(10)->withTranslations()->create();
 
         $product = Product::factory()
@@ -78,20 +91,7 @@ class DatabaseSeeder extends Seeder
                 ],
             ])
             ->create();
-
-        // Create a store with explicit translations
-        $store = Store::factory()
-            ->withTranslations([
-                [
-                    'language' => 'en',
-                    'name' => 'top Tech Store',
-                ],
-                [
-                    'language' => 'ar',
-                    'name' => 'متجر تقني',
-                ],
-            ])
-            ->create();
+            
         Store::factory()
             ->withTranslations([
                 [
