@@ -68,4 +68,14 @@ class ProductFactory extends Factory
             }
         });
     }
+
+    public function withTags($tags)
+    {
+        return $this->afterCreating(function (Product $product) use ($tags) {
+            foreach ($tags as $tag) {
+                // Attach the tag to the order with pivot data
+                $product->tags()->attach($tag->id);
+            }
+        });
+    }
 }
