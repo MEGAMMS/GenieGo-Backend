@@ -7,6 +7,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Models\ProductTranslation;
 use App\Traits\ApiResponses;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -27,8 +28,10 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        $owner = $request->user()->owner;
+        
         // Create product
-        $product = Product::create(['price' => $request->price]);
+        $product = Product::create(['price' => $request->price,'stock'=>$request->stock,'store_id'=>$owner->store_id]);
 
         // Create translations
         foreach ($request->translations as $translation) {
@@ -64,6 +67,11 @@ class ProductController extends Controller
         // Update product price if provided
         if ($request->has('price')) {
             $product->update(['price' => $request->price]);
+        }
+
+        // Update product stock if provided
+        if ($request->has('stock')) {
+            $product->update(['stock' => $request->stock]);
         }
 
         // Update translations

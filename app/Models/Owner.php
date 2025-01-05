@@ -11,11 +11,11 @@ class Owner extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function store()
     {
-        return $this->belongTo(Store::class);
+        return $this->belongsTo(Store::class);
     }
 }
