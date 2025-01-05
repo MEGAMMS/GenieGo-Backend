@@ -17,9 +17,12 @@ Route::get('/hello', function () {
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::middleware('auth:sanctum')->get('/user/current', [UserController::class, 'currentUser']);
-Route::middleware('auth:sanctum')->put('/user', [UserController::class, 'update']);
-Route::middleware('auth:sanctum')->delete('/user', [UserController::class, 'delete']);
+Route::middleware('auth:sanctum')->prefix('/user')->group(function () {
+    Route::get('/current', [UserController::class, 'currentUser']);
+    Route::put('/', [UserController::class, 'update']);
+    Route::delete('/', [UserController::class, 'delete']);
+
+});
 
 Route::prefix('products')->group(function () {
     // Public routes (no authentication required)
@@ -33,6 +36,7 @@ Route::prefix('products')->group(function () {
         Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
     });
 });
+Route::apiResource('products', ProductController::class);
 
 Route::get('stores/{id}/products', [StoreController::class, 'products']);
 

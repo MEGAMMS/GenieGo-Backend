@@ -24,7 +24,7 @@ class OrderResource extends JsonResource
                     'quantity' => $product->pivot->quantity,
                 ];
             }),
-            /* 'created_at' => $this->created_at->toDateTimeString(), */
+            'created_at' => $this->created_at->toDateTimeString(),
             /* 'updated_at' => $this->updated_at->toDateTimeString(), */
         ];
     }
