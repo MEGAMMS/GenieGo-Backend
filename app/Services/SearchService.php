@@ -25,9 +25,7 @@ class SearchService
                     $translationQuery->where('name', 'LIKE', "%$query%");
                 });
             })
-            ->with(['translations' => function ($translationQuery) use ($query) {
-                $translationQuery->where('name', 'LIKE', "%$query%");
-            }])
+            ->with('translations')
             ->get();
 
         // Search Stores matching all tags and query
@@ -39,9 +37,7 @@ class SearchService
                     $translationQuery->where('name', 'LIKE', "%$query%");
                 });
             })
-            ->with(['translations' => function ($translationQuery) use ($query) {
-                $translationQuery->where('name', 'LIKE', "%$query%");
-            }])
+            ->with('translations')
             ->get();
 
         return [

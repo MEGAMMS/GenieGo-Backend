@@ -30,7 +30,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $owner = $request->user()->owner;
-        
+
         // Create product
         $product = Product::create(['price' => $request->price,'stock'=>$request->stock,'store_id'=>$owner->store_id]);
 
@@ -99,7 +99,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         Gate::authorize('delete',$product);
-        
+
         // Delete associated translations
         $product->translations()->delete();
 
