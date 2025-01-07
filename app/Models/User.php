@@ -27,7 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
-        'role_id',
+        'icon'
     ];
 
     // Define relationship with Role

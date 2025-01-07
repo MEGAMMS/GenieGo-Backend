@@ -31,6 +31,7 @@ class UpdateUserRequest extends FormRequest
             'email' => ['sometimes', 'string', 'email', 'max:255', Rule::unique('users')->ignore($userId)],
             'phone' => ['sometimes', 'string', 'max:20', Rule::unique('users')->ignore($userId)],
             'new_password' => 'sometimes|string|min:8',
+            'icon' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
             'password' => 'required|string|min:8',
         ];

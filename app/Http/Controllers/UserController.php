@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Api\UpdateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -28,6 +29,16 @@ class UserController extends Controller
         // If the password is being updated, hash it
         if ($request->filled('new_password')) {
             $user->password = Hash::make($request->new_password);
+        }
+
+        if ($request->hasFile('icon')) {
+            // Delete the old icon if it exists
+            if ($user->icon) {
+                Storage::delete($user->icon);
+            }
+
+            // Store the new icon
+            $request['icon'] = $request->file('icon')->store('icons', 'public');
         }
 
         // Update the user's details

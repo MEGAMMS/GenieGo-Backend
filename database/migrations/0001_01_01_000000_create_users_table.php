@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -19,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable(false)->comment('Email address of the user');
             $table->string('password')->nullable(false);
             $table->string('phone')->nullable()->comment('Phone number of the user');
-            // $table->foreignId('role_id')->constrained('roles')->onDelete('cascade'); // Foreign key
+            $table->string('icon')->nullable();
             $table->timestamps();
         });
 
