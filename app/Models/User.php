@@ -27,25 +27,8 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
-        'icon'
+        'icon',
     ];
-
-    // Define relationship with Role
-
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
-
-    public function customer()
-    {
-        return $this->hasOne(Customer::class);
-    }
-
-    public function owner()
-    {
-        return $this->hasOne(Owner::class);
-    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -68,5 +51,31 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
+
+    public function owner()
+    {
+        return $this->hasOne(Owner::class);
+    }
+
+    /**
+     * Determine the user's role.
+     */
+    public function getRole(): string
+    {
+        if ($this->customer !== null) {
+            return 'Customer';
+        }
+
+        if ($this->owner !== null) {
+            return 'Owner';
+        }
+
+        return 'unknown';
     }
 }

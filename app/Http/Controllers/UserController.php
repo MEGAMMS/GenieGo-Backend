@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Api\UpdateUserRequest;
+use App\Http\Resources\UserResource;
+use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    use ApiResponses;
+
     public function currentUser(Request $request)
     {
-        return response()->json([
-            'data' => $request->user(),
-        ]);
+        return new UserResource($request->user());
     }
 
     public function update(UpdateUserRequest $request)
@@ -22,9 +24,7 @@ class UserController extends Controller
 
         // Check if the provided password matches the user's current password
         if (! Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => 'Current password is incorrect.',
-            ], 400);
+            return $this->error("Current password is incorrect.",[]);
         }
         // If the password is being updated, hash it
         if ($request->filled('new_password')) {
@@ -44,9 +44,8 @@ class UserController extends Controller
         // Update the user's details
         $user->update($request->except('password', 'new_password'));
 
-        return response()->json([
-            'message' => 'User updated successfully',
-            'data' => $user,
+        return $this->success('User updated successfully', [
+            'user' => new UserResource($user),
         ]);
     }
 

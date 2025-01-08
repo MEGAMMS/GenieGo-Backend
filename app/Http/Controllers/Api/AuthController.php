@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LoginUserRequest;
 use App\Http\Requests\Api\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Models\Customer;
 use App\Models\Owner;
 use App\Models\User;
@@ -39,7 +40,7 @@ class AuthController extends Controller
             'Authenticated',
             [
                 'token' => $token->plainTextToken,
-                'user' => $user,
+                'user' => new UserResource($user),
             ]
         );
     }
