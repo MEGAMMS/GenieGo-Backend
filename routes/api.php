@@ -34,21 +34,25 @@ Route::prefix('products')->group(function () {
         Route::post('/', [ProductController::class, 'store'])->name('products.store');
         Route::put('/{product}', [ProductController::class, 'update'])->name('products.update');
         Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+        Route::post('/addTag/{product}', [ProductController::class, 'addTag']);
     });
 });
 
-Route::get('stores/{id}/products', [StoreController::class, 'products']);
+
+
 
 Route::prefix('stores')->group(function () {
     // Public routes (no authentication required)
     Route::get('/', [StoreController::class, 'index'])->name('stores.index');
     Route::get('/{store}', [StoreController::class, 'show'])->name('stores.show');
-
+    Route::get('/{store}/products', [StoreController::class, 'products']);
     // Protected routes (require authentication)
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [StoreController::class, 'store'])->name('stores.store');
         Route::put('/{store}', [StoreController::class, 'update'])->name('stores.update');
         Route::delete('/{store}', [StoreController::class, 'destroy'])->name('stores.destroy');
+        Route::post('/addTag/{store}', [StoreController::class, 'addTag']);
+        
     });
 });
 

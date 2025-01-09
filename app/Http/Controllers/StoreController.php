@@ -44,7 +44,7 @@ class StoreController extends Controller
                 'description' => $translation['description'] ?? null,
             ]);
         }
-        
+
         $owner=Auth::user()->owner;
         $owner->addStore($store->id);
         
@@ -115,5 +115,18 @@ class StoreController extends Controller
         $store = Store::with('products')->findOrFail($id);
 
         return ProductResource::collection($store->products);
+    }
+
+    public function addTag(Request $request,string $store_id)
+    {
+        $store = Store::findOrFail($store_id);
+
+        // Assuming you are sending a 'tag_id' in the request
+        $tagId = $request->input('tag_id');
+    
+        // Attach the tag to the store
+        $store->tags()->attach($tagId);
+
+        return response()->json(['message' => 'Tag added successfully!'], 200);
     }
 }

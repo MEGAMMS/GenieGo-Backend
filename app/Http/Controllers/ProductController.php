@@ -7,6 +7,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Models\ProductTranslation;
 use App\Traits\ApiResponses;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -107,5 +108,18 @@ class ProductController extends Controller
         $product->delete();
 
         return $this->ok('Product deleted successfully');
+    }
+
+    public function addTag(Request $request,string $product_id)
+    {
+        $product = Product::findOrFail($product_id);
+
+        // Assuming you are sending a 'tag_id' in the request
+        $tagId = $request->input('tag_id');
+    
+        // Attach the tag to the store
+        $product->tags()->attach($tagId);
+
+        return response()->json(['message' => 'Tag added successfully!'], 200);
     }
 }
