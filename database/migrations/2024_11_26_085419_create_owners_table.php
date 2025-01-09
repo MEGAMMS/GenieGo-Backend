@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('owners', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Foreign key to 'users' table
-            $table->foreignId('store_id')->constrained('stores')->onDelete('cascade'); // Foreign key to 'stores' table
+            $table->foreignId('store_id')->nullable()->constrained('stores')->onDelete('cascade'); // Foreign key to 'stores' table
             $table->timestamps();
         });
     }
