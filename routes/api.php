@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
@@ -38,9 +39,6 @@ Route::prefix('products')->group(function () {
     });
 });
 
-
-
-
 Route::prefix('stores')->group(function () {
     // Public routes (no authentication required)
     Route::get('/', [StoreController::class, 'index'])->name('stores.index');
@@ -67,3 +65,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->apiResource('sites', SiteController::class);
+
+Route::middleware('auth:sanctum')->get('/tags', [TagController::class,'index']);
