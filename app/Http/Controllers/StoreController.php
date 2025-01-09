@@ -35,10 +35,10 @@ class StoreController extends Controller
 
         $store = Store::create(['icon' => $iconPath]);
         // Create translations
-        foreach ($request->translations as $translation) {
+        foreach ($request->translations as $language => $translation) {
             StoreTranslation::create([
                 'store_id' => $store->id,
-                'language' => $translation['language'],
+                'language' => $language, // Use the key as the language
                 'name' => $translation['name'],
                 'description' => $translation['description'] ?? null,
             ]);

@@ -35,10 +35,10 @@ class ProductController extends Controller
         $product = Product::create(['price' => $request->price,'stock'=>$request->stock,'store_id'=>$owner->store_id]);
 
         // Create translations
-        foreach ($request->translations as $translation) {
+        foreach ($request->translations as $language => $translation) {
             ProductTranslation::create([
                 'product_id' => $product->id,
-                'language' => $translation['language'],
+                'language' => $language, // Use the key as the language
                 'name' => $translation['name'],
                 'description' => $translation['description'] ?? null,
             ]);
