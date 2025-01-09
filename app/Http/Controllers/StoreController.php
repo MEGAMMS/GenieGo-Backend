@@ -8,6 +8,7 @@ use App\Http\Resources\StoreResource;
 use App\Models\Store;
 use App\Models\StoreTranslation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
@@ -43,6 +44,10 @@ class StoreController extends Controller
                 'description' => $translation['description'] ?? null,
             ]);
         }
+        
+        $owner=Auth::user()->owner;
+        $owner->addStore($store->id);
+        
 
         return new StoreResource($store->load('translations'));
     }

@@ -36,11 +36,21 @@ Route::prefix('products')->group(function () {
         Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
     });
 });
-Route::apiResource('products', ProductController::class);
 
 Route::get('stores/{id}/products', [StoreController::class, 'products']);
 
-Route::apiResource('stores', StoreController::class);
+Route::prefix('stores')->group(function () {
+    // Public routes (no authentication required)
+    Route::get('/', [StoreController::class, 'index'])->name('stores.index');
+    Route::get('/{store}', [StoreController::class, 'show'])->name('stores.show');
+
+    // Protected routes (require authentication)
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/', [StoreController::class, 'store'])->name('stores.store');
+        Route::put('/{store}', [StoreController::class, 'update'])->name('stores.update');
+        Route::delete('/{store}', [StoreController::class, 'destroy'])->name('stores.destroy');
+    });
+});
 
 Route::post('/search', [SearchController::class, 'search']);
 

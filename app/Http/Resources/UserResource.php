@@ -18,7 +18,7 @@ class UserResource extends JsonResource
     
     if ($this->getRole() === 'Owner') {
         $additionalDetails = [
-            'store_id' => $this->store,
+            'store_id' => $this->owner->store_id,
         ];
     }
 
