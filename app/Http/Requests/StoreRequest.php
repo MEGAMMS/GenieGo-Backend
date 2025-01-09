@@ -26,6 +26,7 @@ class StoreRequest extends FormRequest
             'translations' => 'required|array|size:2',
             'translations.*.name' => 'required|string|max:255',
             'translations.*.description' => 'nullable|string',
+            'tags'=>'nullable'
         ];
     }
 }

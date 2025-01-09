@@ -88,6 +88,11 @@ class ProductController extends Controller
             $productTranslation->description = $translation['description'] ?? null;
             $productTranslation->save();
         }
+        
+        $tags = $request->input('tags');
+        // Attach the tag to the store
+        $product->tags()->attach($tags);
+        $product->save();
 
         return new ProductResource($product->load('translations'));
     }

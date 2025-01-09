@@ -44,6 +44,10 @@ class StoreController extends Controller
                 'description' => $translation['description'] ?? null,
             ]);
         }
+        $tags = $request->input('tags');
+        // Attach the tag to the store
+        $store->tags()->attach($tags);
+        $store->save();
 
         $owner=Auth::user()->owner;
         $owner->addStore($store->id);
