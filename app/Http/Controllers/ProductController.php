@@ -7,6 +7,7 @@ use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Models\ProductTranslation;
 use App\Traits\ApiResponses;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -35,10 +36,10 @@ class ProductController extends Controller
         $product = Product::create(['price' => $request->price,'stock'=>$request->stock,'store_id'=>$owner->store_id]);
 
         // Create translations
-        foreach ($request->translations as $translation) {
+        foreach ($request->translations as $language => $translation) {
             ProductTranslation::create([
                 'product_id' => $product->id,
-                'language' => $translation['language'],
+                'language' => $language, // Use the key as the language
                 'name' => $translation['name'],
                 'description' => $translation['description'] ?? null,
             ]);
@@ -87,6 +88,11 @@ class ProductController extends Controller
             $productTranslation->description = $translation['description'] ?? null;
             $productTranslation->save();
         }
+        
+        $tags = $request->input('tags');
+        // Attach the tag to the store
+        $product->tags()->attach($tags);
+        $product->save();
 
         return new ProductResource($product->load('translations'));
     }
@@ -107,5 +113,18 @@ class ProductController extends Controller
         $product->delete();
 
         return $this->ok('Product deleted successfully');
+    }
+
+    public function addTag(Request $request,string $product_id)
+    {
+        $product = Product::findOrFail($product_id);
+
+        // Assuming you are sending a 'tag_id' in the request
+        $tagId = $request->input('tag_id');
+    
+        // Attach the tag to the store
+        $product->tags()->attach($tagId);
+
+        return response()->json(['message' => 'Tag added successfully!'], 200);
     }
 }

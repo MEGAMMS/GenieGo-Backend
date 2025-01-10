@@ -8,6 +8,7 @@ use App\Http\Resources\StoreResource;
 use App\Models\Store;
 use App\Models\StoreTranslation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
@@ -35,14 +36,22 @@ class StoreController extends Controller
 
         $store = Store::create(['icon' => $iconPath]);
         // Create translations
-        foreach ($request->translations as $translation) {
+        foreach ($request->translations as $language => $translation) {
             StoreTranslation::create([
                 'store_id' => $store->id,
-                'language' => $translation['language'],
+                'language' => $language, // Use the key as the language
                 'name' => $translation['name'],
                 'description' => $translation['description'] ?? null,
             ]);
         }
+        $tags = $request->input('tags');
+        // Attach the tag to the store
+        $store->tags()->attach($tags);
+        $store->save();
+
+        $owner=Auth::user()->owner;
+        $owner->addStore($store->id);
+        
 
         return new StoreResource($store->load('translations'));
     }
@@ -110,5 +119,18 @@ class StoreController extends Controller
         $store = Store::with('products')->findOrFail($id);
 
         return ProductResource::collection($store->products);
+    }
+
+    public function addTag(Request $request,string $store_id)
+    {
+        $store = Store::findOrFail($store_id);
+
+        // Assuming you are sending a 'tag_id' in the request
+        $tagId = $request->input('tag_id');
+    
+        // Attach the tag to the store
+        $store->tags()->attach($tagId);
+
+        return response()->json(['message' => 'Tag added successfully!'], 200);
     }
 }

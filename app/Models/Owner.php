@@ -16,6 +16,7 @@ class Owner extends Model
      */
     protected $fillable = [
         'user_id',
+        'store_id',
     ];
 
     public function user()
@@ -26,5 +27,13 @@ class Owner extends Model
     public function store()
     {
         return $this->belongsTo(Store::class);
+    }
+
+    public function addStore($store_id)
+    {
+        $this->store_id=$store_id;
+        if (!$this->save()) {
+            throw new \Exception('Failed to save store_id to the Owner model');
+        }
     }
 }

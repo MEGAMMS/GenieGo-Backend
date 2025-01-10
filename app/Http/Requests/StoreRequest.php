@@ -24,9 +24,9 @@ class StoreRequest extends FormRequest
         return [
             'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'translations' => 'required|array|size:2',
-            'translations.*.language' => 'required|string|max:5',
             'translations.*.name' => 'required|string|max:255',
             'translations.*.description' => 'nullable|string',
+            'tags'=>'nullable'
         ];
     }
 }
