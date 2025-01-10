@@ -69,11 +69,11 @@ class DatabaseSeeder extends Seeder
 
         Customer::factory(10)->recycle($users)->create();
         $tags = Tag::factory(4)->create();
-        $stores = Store::factory(10)->withTranslations()->withTags($tags)->create();
-        $products = Product::factory(30)->withTags($tags)->withTranslations()->recycle($stores)->create();
+        //$stores = Store::factory(10)->withTranslations()->withTags($tags)->create();
+        $products = Product::factory(30)->withTags($tags)->withTranslations()->create();
 
         Order::factory()->recycle($testCustomer)->withProducts($products)->create();
-        Owner::factory()->recycle($stores)->recycle($testUser)->create();
+        //Owner::factory()->recycle($stores)->recycle($testUser)->create();
 
         $product = Product::factory()
             ->withTranslations([
