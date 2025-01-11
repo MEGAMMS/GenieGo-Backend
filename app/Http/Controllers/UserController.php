@@ -32,16 +32,6 @@ class UserController extends Controller
             $user->password = Hash::make($request->new_password);
         }
 
-        if ($request->hasFile('icon')) {
-            // Delete the old icon if it exists
-            if ($user->icon) {
-                Storage::delete($user->icon);
-            }
-
-            // Store the new icon
-            $request['icon'] = $request->file('icon')->store('icons', 'public');
-        }
-
         // Update the user's details
         $user->update($request->except('password', 'new_password'));
 
