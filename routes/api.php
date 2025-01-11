@@ -21,6 +21,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::middleware('auth:sanctum')->prefix('/user')->group(function () {
     Route::get('/current', [UserController::class, 'currentUser']);
     Route::put('/', [UserController::class, 'update']);
+    Route::post('/upload-icon', [UserController::class, 'uploadIcon']);
     Route::delete('/', [UserController::class, 'delete']);
 
 });
@@ -35,7 +36,7 @@ Route::prefix('products')->group(function () {
         Route::post('/', [ProductController::class, 'store'])->name('products.store');
         Route::put('/{product}', [ProductController::class, 'update'])->name('products.update');
         Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
-        Route::post('/addTag/{product}', [ProductController::class, 'addTag']);
+        Route::post('/add-tag/{product}', [ProductController::class, 'addTag']);
     });
 });
 
@@ -49,8 +50,8 @@ Route::prefix('stores')->group(function () {
         Route::post('/', [StoreController::class, 'store'])->name('stores.store');
         Route::put('/{store}', [StoreController::class, 'update'])->name('stores.update');
         Route::delete('/{store}', [StoreController::class, 'destroy'])->name('stores.destroy');
-        Route::post('/addTag/{store}', [StoreController::class, 'addTag']);
-        
+        Route::post('/add-tag/{store}', [StoreController::class, 'addTag']);
+
     });
 });
 

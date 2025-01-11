@@ -15,7 +15,7 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         $additionalDetails = [];
-    
+
     if ($this->getRole() === 'Owner') {
         $additionalDetails = [
             'store_id' => $this->owner->store_id,
@@ -29,7 +29,7 @@ class UserResource extends JsonResource
         'username' => $this->username,
         'email' => $this->email,
         'phone' => $this->phone,
-        'icon' => $this->icon,
+        'icon_url' => $this->icon,
         'role' => $this->getRole(),
         /* 'created_at' => $this->created_at, */
         /* 'updated_at' => $this->updated_at, */

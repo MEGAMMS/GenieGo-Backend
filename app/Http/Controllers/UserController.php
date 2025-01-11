@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Api\UpdateUserRequest;
+use App\Http\Requests\UploadIconRequest;
 use App\Http\Resources\UserResource;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class UserController extends Controller
 
         // Check if the provided password matches the user's current password
         if (! Hash::check($request->password, $user->password)) {
-            return $this->error("Current password is incorrect.",[]);
+            return $this->error('Current password is incorrect.', 401);
         }
         // If the password is being updated, hash it
         if ($request->filled('new_password')) {
@@ -68,5 +69,22 @@ class UserController extends Controller
         return response()->json([
             'message' => 'User deleted successfully',
         ]);
+    }
+
+    /**
+     * Handle uploading the user icon.
+     */
+    public function uploadIcon(UploadIconRequest $request)
+    {
+        $user = $request->user();
+
+        // Store the uploaded file
+        $icon_path = $request->file('icon')->store('user-icons', 'public');
+
+        // Update the user's icon path
+        $user->update(['icon' => $icon_path]);
+
+        return $this->success('User icon uploaded successfully', ['icon_url' => Storage::url($icon_path)]);
+
     }
 }
