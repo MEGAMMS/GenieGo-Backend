@@ -8,7 +8,6 @@ use App\Models\Product;
 use App\Models\ProductTranslation;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
@@ -33,7 +32,7 @@ class ProductController extends Controller
         $owner = $request->user()->owner;
 
         // Create product
-        $product = Product::create(['price' => $request->price,'stock'=>$request->stock,'store_id'=>$owner->store_id]);
+        $product = Product::create(['price' => $request->price, 'stock' => $request->stock, 'store_id' => $owner->store_id]);
 
         // Create translations
         foreach ($request->translations as $language => $translation) {
@@ -66,7 +65,7 @@ class ProductController extends Controller
         // Find product
         $product = Product::findOrFail($id);
 
-        Gate::authorize('update',$product);
+        Gate::authorize('update', $product);
 
         // Update product price if provided
         if ($request->has('price')) {
@@ -79,16 +78,16 @@ class ProductController extends Controller
         }
 
         // Update translations
-        foreach ($request->translations as $translation) {
+        foreach ($request->translations as $language => $translation) {
             $productTranslation = ProductTranslation::firstOrNew([
                 'product_id' => $product->id,
-                'language' => $translation['language'],
+                'language' => $language, // Use the key as the language
             ]);
             $productTranslation->name = $translation['name'];
             $productTranslation->description = $translation['description'] ?? null;
             $productTranslation->save();
         }
-        
+
         $tags = $request->input('tags');
         // Attach the tag to the store
         $product->tags()->attach($tags);
@@ -104,7 +103,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        Gate::authorize('delete',$product);
+        Gate::authorize('delete', $product);
 
         // Delete associated translations
         $product->translations()->delete();
@@ -115,13 +114,13 @@ class ProductController extends Controller
         return $this->ok('Product deleted successfully');
     }
 
-    public function addTag(Request $request,string $product_id)
+    public function addTag(Request $request, string $product_id)
     {
         $product = Product::findOrFail($product_id);
 
         // Assuming you are sending a 'tag_id' in the request
         $tagId = $request->input('tag_id');
-    
+
         // Attach the tag to the store
         $product->tags()->attach($tagId);
 
