@@ -16,23 +16,23 @@ class UserResource extends JsonResource
     {
         $additionalDetails = [];
 
-    if ($this->getRole() === 'Owner') {
-        $additionalDetails = [
-            'store_id' => $this->owner->store_id,
-        ];
-    }
+        if ($this->getRole() === 'Owner') {
+            $additionalDetails = [
+                'store_id' => $this->owner->store_id,
+            ];
+        }
 
-    return array_merge([
-        'id' => $this->id,
-        'first_name' => $this->first_name,
-        'last_name' => $this->last_name,
-        'username' => $this->username,
-        'email' => $this->email,
-        'phone' => $this->phone,
-        'icon_url' => $this->icon,
-        'role' => $this->getRole(),
-        /* 'created_at' => $this->created_at, */
-        /* 'updated_at' => $this->updated_at, */
-    ], $additionalDetails);
+        return array_merge([
+            'id' => $this->id,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'username' => $this->username,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'icon_url' => $this->icon ? asset('storage/'.$this->icon) : null,
+            'role' => $this->getRole(),
+            /* 'created_at' => $this->created_at, */
+            /* 'updated_at' => $this->updated_at, */
+        ], $additionalDetails);
     }
 }

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\UploadIconRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Models\ProductTranslation;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -125,5 +127,24 @@ class ProductController extends Controller
         $product->tags()->attach($tagId);
 
         return response()->json(['message' => 'Tag added successfully!'], 200);
+    }
+
+    /**
+     * Handle uploading the product icon.
+     */
+    public function uploadIcon(UploadIconRequest $request, string $product_id)
+    {
+        $product = Product::findOrFail($product_id);
+
+        if ($product->icon) {
+            Storage::disk('public')->delete($product->icon); // Delete old icon
+        }
+        // Product the uploaded file
+        $icon_path = $request->file('icon')->store('products-icons', 'public');
+
+        $product->update(['icon' => $icon_path]);
+
+        return $this->success('Product icon uploaded successfully', ['icon_url' => asset('storage/'.$icon_path)]);
+
     }
 }

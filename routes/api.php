@@ -36,7 +36,8 @@ Route::prefix('products')->group(function () {
         Route::post('/', [ProductController::class, 'store'])->name('products.store');
         Route::put('/{product}', [ProductController::class, 'update'])->name('products.update');
         Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
-        Route::post('/add-tag/{product}', [ProductController::class, 'addTag']);
+        Route::post('/{pruduct}/add-tag', [ProductController::class, 'addTag']);
+        Route::post('/{product}/upload-icon', [ProductController::class, 'uploadIcon']);
     });
 });
 
@@ -48,9 +49,10 @@ Route::prefix('stores')->group(function () {
     // Protected routes (require authentication)
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [StoreController::class, 'store'])->name('stores.store');
-        Route::put('/{store}', [StoreController::class, 'update'])->name('stores.update');
-        Route::delete('/{store}', [StoreController::class, 'destroy'])->name('stores.destroy');
-        Route::post('/add-tag/{store}', [StoreController::class, 'addTag']);
+        Route::put('/', [StoreController::class, 'update'])->name('stores.update');
+        Route::delete('/', [StoreController::class, 'destroy'])->name('stores.destroy');
+        Route::post('/add-tag', [StoreController::class, 'addTag']);
+        Route::post('/upload-icon', [StoreController::class, 'uploadIcon']);
 
     });
 });

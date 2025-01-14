@@ -8,7 +8,6 @@ use App\Http\Resources\UserResource;
 use App\Traits\ApiResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -74,7 +73,7 @@ class UserController extends Controller
         // Update the user's icon path
         $user->update(['icon' => $icon_path]);
 
-        return $this->success('User icon uploaded successfully', ['icon_url' => Storage::url($icon_path)]);
+        return $this->success('User icon uploaded successfully', ['icon_url' => asset('storage/'.$icon_path)]);
 
     }
 }

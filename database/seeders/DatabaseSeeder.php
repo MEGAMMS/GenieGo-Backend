@@ -73,7 +73,6 @@ class DatabaseSeeder extends Seeder
         $products = Product::factory(30)->recycle($store)->withTags($tags)->withTranslations()->create();
 
         Order::factory()->recycle($testCustomer)->withProducts($products)->create();
-        //Owner::factory()->recycle($stores)->recycle($testUser)->create();
 
         $product = Product::factory()
             ->withTranslations([
