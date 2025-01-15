@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['price','stock','store_id'];
+    protected $fillable = ['price', 'stock', 'store_id', 'icon'];
 
     public function translations()
     {
@@ -23,7 +23,7 @@ class Product extends Model
 
     public function tags()
     {
-         return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class);
     }
 
     public function orders()

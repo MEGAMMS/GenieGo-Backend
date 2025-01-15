@@ -10,6 +10,7 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
+        'site_id',
         'customer_id',
         'total_price',
         'status',
@@ -23,5 +24,10 @@ class Order extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity');
+    }
+
+    public function site()
+    {
+        return $this->belongsTo(Site::class);
     }
 }

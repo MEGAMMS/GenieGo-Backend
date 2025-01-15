@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Customer;
-use App\Models\Store;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +20,7 @@ class OrderFactory extends Factory
     {
         return [
             'customer_id' => Customer::factory(),
+            'order_id' => Order::factory(),
             'total_price' => fake()->randomFloat(2, 1, 100),
             'status' => fake()->randomElement(['delivered', 'canceled', 'pending']),
         ];

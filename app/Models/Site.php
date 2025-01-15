@@ -24,4 +24,9 @@ class Site extends Model
         // A Site belongs to one Store
         return $this->belongsTo(Store::class);
     }
+
+    public function order()
+    {
+        return $this->hasOne(Order::class);
+    }
 }

@@ -23,7 +23,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'price' => 'required|numeric|min:0',
-            'stock' => 'required|numeric|min:1',
+            'stock' => 'required|numeric|min:0',
             'translations' => 'required|array|size:2',
             'translations.*.name' => 'required|string|max:255',
             'translations.*.description' => 'nullable|string',

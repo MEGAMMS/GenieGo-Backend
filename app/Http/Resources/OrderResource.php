@@ -17,6 +17,7 @@ class OrderResource extends JsonResource
         return [
             'id' => $this->id,
             'total_price' => $this->total_price,
+            'site' => new SiteResource($this->site),
             'status' => $this->status,
             'products' => $this->products->map(function ($product) {
                 return [
